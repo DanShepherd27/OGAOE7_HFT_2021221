@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OGAOE73_HFT_2021221.Client
+namespace OGAOE7_HFT_2021221.Client
 {
     class Program
     {
