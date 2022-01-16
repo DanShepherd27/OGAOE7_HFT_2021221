@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OGAOE7_HFT_2021221.Logic
 {
-    interface IPromoOrderLogic : ILogic<PromoOrder>
+    public interface IPromoOrderLogic : ILogic<PromoOrder>
     {
         #region CRUD
         PromoOrder Read(int id);

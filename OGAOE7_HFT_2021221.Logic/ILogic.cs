@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OGAOE7_HFT_2021221.Logic
 {
-    interface ILogic<T> where T : class
+    public interface ILogic<T> where T : class
     {
         // Common CRUD
         IQueryable<T> ReadAll();

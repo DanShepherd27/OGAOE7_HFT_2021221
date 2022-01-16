@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OGAOE7_HFT_2021221.Logic
 {
-    interface IPizzaLogic : ILogic<Pizza>
+    public interface IPizzaLogic : ILogic<Pizza>
     {
         #region CRUD
         Pizza Read(string name);

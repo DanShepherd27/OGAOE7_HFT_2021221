@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OGAOE7_HFT_2021221.Logic
 {
-    interface IDrinkLogic : ILogic<Drink>
+    public interface IDrinkLogic : ILogic<Drink>
     {
         #region CRUD
         Drink Read(string name);
