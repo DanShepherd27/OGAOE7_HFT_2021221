@@ -35,7 +35,28 @@ namespace OGAOE7_HFT_2021221.Logic
         #endregion
 
         #region NON-CRUD
-        
+        public int DrinkRevenueInTimePeriod(DateTime start, DateTime end)
+        {
+            return (from drinks in ReadAll()
+                    join orders in promoOrderRepository.ReadAll() on drinks.Name equals orders.DrinkName
+                    where orders.TimeOfOrder >= start && orders.TimeOfOrder <= end
+                    select drinks.Price * orders.DiscountPercentage / 100).Sum();
+        }
+
+        public IEnumerable<Drink> MostPopularDrinkWithACertainPizza(Pizza pizza)
+        {
+            var q = (from drinks in ReadAll()
+                     join orders in promoOrderRepository.ReadAll() on drinks.Name equals orders.DrinkName
+                     where orders.PizzaName == pizza.Name
+                     select drinks).ToList();
+
+            return new List<Drink>{
+                    (from drink in q
+                    group drink by drink into g
+                    orderby g.Count()
+                    select g).First().Key
+            };
+        }
         #endregion
 
     }

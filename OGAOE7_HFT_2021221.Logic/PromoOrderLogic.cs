@@ -37,6 +37,35 @@ namespace OGAOE7_HFT_2021221.Logic
         #endregion
 
         #region NON-CRUD
+        public IEnumerable<PromoOrder> MostOrderedComboEver()
+        {
+            var q = from order in ReadAll()
+                    join pizza in pizzaRepository.ReadAll() on order.PizzaName equals pizza.Name
+                    join drink in drinkRepository.ReadAll() on order.DrinkName equals drink.Name
+                    select new { Pizza = pizza, Drink = drink };
+            var q2 = from record in q
+                     group record by new
+                     {
+                         PName = record.Pizza.Name,
+                         DName = record.Drink.Name
+                     } into g
+                     orderby g.Count() descending
+                     select new PromoOrder
+                     {
+                         PizzaName = g.Key.PName,
+                         DrinkName = g.Key.DName,
+                         Drink = new Drink(),
+                         Pizza = new Pizza()
+                     };
+            var q3 = q2.FirstOrDefault();
+            q3.Drink = (from drink in drinkRepository.ReadAll()
+                        where drink.Name == q3.DrinkName
+                        select drink).FirstOrDefault();
+            q3.Pizza = (from pizza in pizzaRepository.ReadAll()
+                        where pizza.Name == q3.PizzaName
+                        select pizza).FirstOrDefault();
+            return new List<PromoOrder> { q3 };
+        }
         #endregion
     }
 }
