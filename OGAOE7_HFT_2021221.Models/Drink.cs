@@ -12,12 +12,9 @@ namespace OGAOE7_HFT_2021221.Models
     /// This class models drinks that can be ordered at our Italian restaurant.
     /// </summary>
     [Table("Drinks")]
-    public class Drink
+    public class Drink : IComparable<Drink>
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public int Price { get; set; }
@@ -32,6 +29,24 @@ namespace OGAOE7_HFT_2021221.Models
         public Drink()
         {
             Orders = new HashSet<PromoOrder>();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Drink)
+                return (obj as Drink).Name == this.Name;
+            else
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public int CompareTo(Drink other)
+        {
+            return string.Compare(this.Name, other.Name);              
         }
     }
 }

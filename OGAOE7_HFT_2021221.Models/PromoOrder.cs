@@ -12,15 +12,15 @@ namespace OGAOE7_HFT_2021221.Models
     /// This class models a promotional order where you can combine your pizza with a drink and you will get a discount.
     /// </summary>
     [Table("Orders")]
-    public class PromoOrder
-    {        
+    public class PromoOrder : IComparable<PromoOrder>
+    {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         public DateTime TimeOfOrder { get; set; }
 
-        public int TotalPrice { get { return (Pizza.Price + Drink.Price) * DiscountPercentage / 100; } }
+        public int TotalPrice { get { return (Pizza.Price + Drink.Price) - (Pizza.Price + Drink.Price) * DiscountPercentage / 100; } }
 
         public int DiscountPercentage { get; set; }
 
@@ -32,7 +32,7 @@ namespace OGAOE7_HFT_2021221.Models
 
         [Required]
         [ForeignKey(nameof(Drink))]
-        public int DrinkId { get; set; }
+        public string DrinkName { get; set; }
 
         // NAVIGATION PROPERTY
 
@@ -41,5 +41,27 @@ namespace OGAOE7_HFT_2021221.Models
 
         [NotMapped]
         public virtual Drink Drink { get; set; }
+
+        public int CompareTo(PromoOrder other)
+        {
+            if (this.Id < other.Id)
+                return -1;
+            else if (this.Id == other.Id)
+                return 0;
+            else
+                return 1;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is PromoOrder)
+                return (obj as PromoOrder).Id == this.Id;
+            else
+                return false;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
     }
 }

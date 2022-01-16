@@ -9,7 +9,7 @@ namespace OGAOE7_HFT_2021221.Models
     /// This class models pizza types on the menu of our Italian restaurant.
     /// </summary>
     [Table("Pizzas")]
-    public class Pizza
+    public class Pizza : IComparable<Pizza>
     {
         [Key]
         [Required]
@@ -27,6 +27,24 @@ namespace OGAOE7_HFT_2021221.Models
         public Pizza()
         {
             Orders = new HashSet<PromoOrder>();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Pizza)
+                return (obj as Pizza).Name == this.Name;
+            else
+                return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public int CompareTo(Pizza other)
+        {
+            return string.Compare(this.Name, other.Name);
         }
     }
 }

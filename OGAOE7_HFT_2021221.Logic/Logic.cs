@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OGAOE7_HFT_2021221.Logic
 {
-    class Logic<T> : ILogic<T> where T: class
+    public abstract class Logic<T> : ILogic<T> where T: class
     {
         protected IRepository<T> repo;
         public Logic(IRepository<T> repo)
