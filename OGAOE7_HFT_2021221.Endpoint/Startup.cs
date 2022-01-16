@@ -34,6 +34,11 @@ namespace OGAOE7_HFT_2021221.Endpoint
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });
+
+                endpoints.MapGet("/Drinks", async context =>
+                {
+                    await context.Response.WriteAsync("These are the drinks in JSON format.");
+                });
             });
         }
     }
