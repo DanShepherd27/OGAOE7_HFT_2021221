@@ -11,7 +11,7 @@ namespace OGAOE7_HFT_2021221.Repository
 {
     public class DrinkRepository : Repository<Drink>, IDrinkRepository
     {
-        public DrinkRepository(PizzaContext ctx) : base(ctx)
+        public DrinkRepository(PizzaDbContext ctx) : base(ctx)
         {
             /* ... */
         }
@@ -51,13 +51,6 @@ namespace OGAOE7_HFT_2021221.Repository
         public void Delete(string name)
         {
             ctx.Drinks.Remove(Read(name));
-        }
-        #endregion
-
-        #region NON-CRUD
-        public void ChangeDrinkName(string drinkName, string newName)
-        {
-            throw new NotImplementedException();
         }
         #endregion
     }

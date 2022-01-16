@@ -10,7 +10,7 @@ namespace OGAOE7_HFT_2021221.Repository
 {
     public class PromoOrderRepository : Repository<PromoOrder>, IPromoOrderRepository
     {
-        public PromoOrderRepository(PizzaContext ctx) : base(ctx)
+        public PromoOrderRepository(PizzaDbContext ctx) : base(ctx)
         {
             /* ... */
         }
@@ -50,15 +50,6 @@ namespace OGAOE7_HFT_2021221.Repository
         public void Delete(int id)
         {
             ctx.Orders.Remove(Read(id));
-            ctx.SaveChanges();
-        }
-        #endregion
-
-        #region NON-CRUD
-        public void ChangeDiscountPercentage(int id, int newPercentage)
-        {
-            var order = Read(id);
-            order.DiscountPercentage = newPercentage;
             ctx.SaveChanges();
         }
         #endregion

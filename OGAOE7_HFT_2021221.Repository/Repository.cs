@@ -9,9 +9,9 @@ namespace OGAOE7_HFT_2021221.Repository
 {
     public abstract class Repository<T> : IRepository<T> where T : class
     {
-        protected PizzaContext ctx;
+        protected PizzaDbContext ctx;
 
-        public Repository(PizzaContext ctx)
+        public Repository(PizzaDbContext ctx)
         {
             this.ctx = ctx;
         }

@@ -14,9 +14,5 @@ namespace OGAOE7_HFT_2021221.Repository
         void Update(Pizza pizza);
         void Delete(string name);
         #endregion
-
-        #region NON-CRUD
-        void ChangePizzaName(string pizzaName, string newName);
-        #endregion
     }
 }

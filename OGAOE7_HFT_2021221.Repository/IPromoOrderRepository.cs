@@ -14,9 +14,5 @@ namespace OGAOE7_HFT_2021221.Repository
         void Update(PromoOrder promoOrder);
         void Delete(int id);
         #endregion
-
-        #region NON-CRUD
-        void ChangeDiscountPercentage(int id, int newPercentage);
-        #endregion
     }
 }

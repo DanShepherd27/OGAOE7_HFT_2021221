@@ -10,7 +10,7 @@ namespace OGAOE7_HFT_2021221.Repository
 {
     public class PizzaRepository : Repository<Pizza>, IPizzaRepository
     {
-        public PizzaRepository(PizzaContext ctx) : base(ctx)
+        public PizzaRepository(PizzaDbContext ctx) : base(ctx)
         {
             /* ... */
         }
@@ -48,15 +48,6 @@ namespace OGAOE7_HFT_2021221.Repository
         public void Delete(string name)
         {
             ctx.Pizzas.Remove(Read(name));
-            ctx.SaveChanges();
-        }
-        #endregion
-
-        #region NON-CRUD
-        public void ChangePizzaName(string pizzaName, string newName)
-        {
-            var pizza = Read(pizzaName);
-            pizza.Name = newName;
             ctx.SaveChanges();
         }
         #endregion
