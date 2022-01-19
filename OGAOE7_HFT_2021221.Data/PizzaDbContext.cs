@@ -24,7 +24,7 @@ namespace OGAOE7_HFT_2021221.Data
             if (!optionsBuilder.IsConfigured)
             {
                 optionsBuilder
-                    .UseLazyLoadingProxies() //do I need this here?
+                    .UseLazyLoadingProxies()
                     .UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\PizzaDB.mdf;Integrated Security=True");
             }
         }
@@ -37,26 +37,30 @@ namespace OGAOE7_HFT_2021221.Data
             {
                 entity.HasMany(pizza => pizza.Orders)
                 .WithOne(promoOrder => promoOrder.Pizza)
-                .HasForeignKey(promoOrder => promoOrder.PizzaName)
+                .HasForeignKey(promoOrder => promoOrder.PizzaId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasIndex(x => x.Name).IsUnique();
             });
 
             modelBuilder.Entity<Drink>(entity =>
             {
                 entity.HasMany(drink => drink.Orders)
                 .WithOne(promoOrder => promoOrder.Drink)
-                .HasForeignKey(promoOrder => promoOrder.DrinkName)
+                .HasForeignKey(promoOrder => promoOrder.DrinkId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasIndex(x => x.Name).IsUnique();
             });
 
             //TEST DATA
             //Pizzas
             modelBuilder.Entity<Pizza>().HasData(new List<Pizza>()
             {
-                new Pizza() { Name = "Pizza number 1", Price = 1100 },
-                new Pizza() { Name = "Pizza number 2", Price = 1200 },
-                new Pizza() { Name = "Pizza number 3", Price = 1300 },
-                new Pizza() { Name = "Pizza number 4", Price = 1400 }
+                new Pizza() { Name = "Pizza number 1", Price = 2100 },
+                new Pizza() { Name = "Pizza number 2", Price = 2200 },
+                new Pizza() { Name = "Pizza number 3", Price = 2300 },
+                new Pizza() { Name = "Pizza number 4", Price = 2400 }
             });
 
             //Drinks
@@ -75,8 +79,8 @@ namespace OGAOE7_HFT_2021221.Data
                 new PromoOrder()
                 {
                     Id = 1,
-                    DrinkName = "Coca Cola",
-                    PizzaName = "Pizza number 2",
+                    DrinkId = 1,
+                    PizzaId = 2,
                     TimeOfOrder = new DateTime(2022, 01, 09, 20, 30, 35), // YYYY, MM, DD, hh, mm, ss
                     DiscountPercentage = 20
                 },
@@ -84,8 +88,8 @@ namespace OGAOE7_HFT_2021221.Data
                 new PromoOrder()
                 {
                     Id = 2,
-                    DrinkName = "Coca Cola",
-                    PizzaName = "Pizza number 2",
+                    DrinkId = 1,
+                    PizzaId = 2,
                     TimeOfOrder = new DateTime(2022, 01, 09, 20, 32, 01), // YYYY, MM, DD, hh, mm, ss
                     DiscountPercentage = 20
                 },
@@ -93,8 +97,8 @@ namespace OGAOE7_HFT_2021221.Data
                 new PromoOrder()
                 {
                     Id = 3,
-                    DrinkName = "Fanta Orange",
-                    PizzaName = "Pizza number 3",
+                    DrinkId = 2,
+                    PizzaId = 3,
                     TimeOfOrder = new DateTime(2022, 01, 09, 21, 59, 05), // YYYY, MM, DD, hh, mm, ss
                     DiscountPercentage = 20
                 },
@@ -102,16 +106,16 @@ namespace OGAOE7_HFT_2021221.Data
                 new PromoOrder()
                 {
                     Id = 4,
-                    DrinkName = "Fanta Orange",
-                    PizzaName = "Pizza number 2",
+                    DrinkId = 2,
+                    PizzaId = 2,
                     TimeOfOrder = new DateTime(2022, 01, 09, 23, 15, 12), // YYYY, MM, DD, hh, mm, ss
                     DiscountPercentage = 20
                 },
                 new PromoOrder()
                 {
                     Id = 5,
-                    DrinkName = "Sprite",
-                    PizzaName = "Pizza number 2",
+                    DrinkId = 3,
+                    PizzaId = 2,
                     TimeOfOrder = new DateTime(2022, 01, 09, 23, 25, 43), // YYYY, MM, DD, hh, mm, ss
                     DiscountPercentage = 20
                 },
@@ -119,30 +123,30 @@ namespace OGAOE7_HFT_2021221.Data
                 new PromoOrder()
                 {
                     Id = 6,
-                    DrinkName = "Dr. Pepper",
-                    PizzaName = "Pizza number 3",
+                    DrinkId = 4,
+                    PizzaId = 3,
                     TimeOfOrder = new DateTime(2022, 01, 09, 20, 32, 01), // YYYY, MM, DD, hh, mm, ss
                     DiscountPercentage = 20
                 },
                 new PromoOrder()
                 {
                     Id = 7,
-                    DrinkName = "Dr. Pepper",
-                    PizzaName = "Pizza number 3",
+                    DrinkId = 4,
+                    PizzaId = 3,
                     TimeOfOrder = new DateTime(2022, 02, 09, 20, 32, 01), // YYYY, MM, DD, hh, mm, ss
                     DiscountPercentage = 20
                 },new PromoOrder()
                 {
                     Id = 8,
-                    DrinkName = "Dr. Pepper",
-                    PizzaName = "Pizza number 3",
+                    DrinkId = 4,
+                    PizzaId = 3,
                     TimeOfOrder = new DateTime(2022, 03, 09, 20, 32, 01), // YYYY, MM, DD, hh, mm, ss
                     DiscountPercentage = 20
                 },new PromoOrder()
                 {
                     Id = 9,
-                    DrinkName = "Dr. Pepper",
-                    PizzaName = "Pizza number 3",
+                    DrinkId = 4,
+                    PizzaId = 3,
                     TimeOfOrder = new DateTime(2022, 04, 09, 20, 32, 01), // YYYY, MM, DD, hh, mm, ss
                     DiscountPercentage = 20
                 },
