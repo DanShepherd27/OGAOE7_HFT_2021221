@@ -22,7 +22,7 @@ namespace OGAOE7_HFT_2021221.Repository
             ctx.SaveChanges();
         }
 
-        public Pizza ReadByName(string name)
+        public Pizza Read(string name)
         {
             try
             {
@@ -61,9 +61,9 @@ namespace OGAOE7_HFT_2021221.Repository
             oldPizza.Name = pizza.Name;
             ctx.SaveChanges();
         }
-        public void DeleteByName(string name)
+        public void Delete(string name)
         {
-            ctx.Pizzas.Remove(ReadByName(name));
+            ctx.Pizzas.Remove(Read(name));
             ctx.SaveChanges();
         }
 

@@ -23,7 +23,7 @@ namespace OGAOE7_HFT_2021221.Repository
             ctx.SaveChanges();
         }
 
-        public Drink ReadByName(string name)
+        public Drink Read(string name)
         {
             try
             {
@@ -63,9 +63,9 @@ namespace OGAOE7_HFT_2021221.Repository
             ctx.SaveChanges();
         }
 
-        public void DeleteByName(string name)
+        public void Delete(string name)
         {
-            ctx.Drinks.Remove(ReadByName(name));
+            ctx.Drinks.Remove(Read(name));
             ctx.SaveChanges();
         }
 
