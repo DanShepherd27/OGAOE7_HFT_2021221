@@ -7,7 +7,12 @@ namespace OGAOE7_HFT_2021221.Repository
     public interface IRepository<T> where T : class
     {
         // Common CRUD
-        IQueryable<T> ReadAll();
         void Create(T newItem);
+        T Read(int id);
+        IQueryable<T> ReadAll();
+        void Update(T newItem);
+        void Delete(int id);
+
+
     }
 }

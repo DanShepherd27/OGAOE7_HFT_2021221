@@ -18,9 +18,15 @@ namespace OGAOE7_HFT_2021221.Repository
 
         public abstract void Create(T newItem);
 
-        public IQueryable<T> ReadAll()
+        public abstract T Read(int id);
+
+        public virtual IQueryable<T> ReadAll()
         {
             return this.ctx.Set<T>(); //"Set" means dataset here, not setter
         }
+
+        public abstract void Update(T newItem);
+
+        public abstract void Delete(int id);
     }
 }

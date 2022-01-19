@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace OGAOE7_HFT_2021221.Repository
 {
@@ -21,7 +22,7 @@ namespace OGAOE7_HFT_2021221.Repository
             ctx.Orders.Add(promoOrder);
             ctx.SaveChanges();
         }
-        public PromoOrder Read(int id)
+        public override PromoOrder Read(int id)
         {
             try
             {
@@ -37,22 +38,28 @@ namespace OGAOE7_HFT_2021221.Repository
             }
         }
 
-        public void Update(PromoOrder promoOrder)
+        public override IQueryable<PromoOrder> ReadAll()
+        {
+            var q = base.ReadAll()/*.Include(x => x.Drink).Include(x=>x.Pizza)*/; //Kell ide az include-os eager loading?
+            return q;
+        }
+        public override void Update(PromoOrder promoOrder)
         {
             PromoOrder oldOrder = Read(promoOrder.Id);
             oldOrder.DiscountPercentage = promoOrder.DiscountPercentage;
-            oldOrder.DrinkName = promoOrder.DrinkName;
-            oldOrder.PizzaName = promoOrder.PizzaName;
+            oldOrder.DrinkId = promoOrder.DrinkId;
+            oldOrder.PizzaId = promoOrder.PizzaId;
             oldOrder.TimeOfOrder = promoOrder.TimeOfOrder;
             ctx.SaveChanges();
         }
 
-        public void Delete(int id)
+        public override void Delete(int id)
         {
             ctx.Orders.Remove(Read(id));
             ctx.SaveChanges();
         }
         #endregion
+
     }
 
 }

@@ -22,7 +22,7 @@ namespace OGAOE7_HFT_2021221.Repository
             ctx.SaveChanges();
         }
 
-        public Pizza Read(string name)
+        public Pizza ReadByName(string name)
         {
             try
             {
@@ -38,16 +38,38 @@ namespace OGAOE7_HFT_2021221.Repository
             }
         }
 
-        public void Update(Pizza pizza)
+        public override Pizza Read(int id)
         {
-            Pizza oldPizza = Read(pizza.Name);
+            try
+            {
+                return ReadAll().SingleOrDefault(x => x.Id == id);
+            }
+            catch (ArgumentNullException)
+            {
+                return default(Pizza);
+            }
+            catch (InvalidOperationException)
+            {
+                return default(Pizza);
+            }
+        }
+
+        public override void Update(Pizza pizza)
+        {
+            Pizza oldPizza = Read(pizza.Id);
             oldPizza.Price = pizza.Price;
             oldPizza.Name = pizza.Name;
             ctx.SaveChanges();
         }
-        public void Delete(string name)
+        public void DeleteByName(string name)
         {
-            ctx.Pizzas.Remove(Read(name));
+            ctx.Pizzas.Remove(ReadByName(name));
+            ctx.SaveChanges();
+        }
+
+        public override void Delete(int id)
+        {
+            ctx.Pizzas.Remove(Read(id));
             ctx.SaveChanges();
         }
         #endregion

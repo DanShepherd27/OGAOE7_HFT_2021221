@@ -23,11 +23,26 @@ namespace OGAOE7_HFT_2021221.Repository
             ctx.SaveChanges();
         }
 
-        public Drink Read(string id)
+        public Drink ReadByName(string name)
         {
             try
             {
-                return ReadAll().SingleOrDefault(x => x.Name == id);
+                return ReadAll().SingleOrDefault(x => x.Name == name);
+            }
+            catch (ArgumentNullException)
+            {
+                return default(Drink);
+            }
+            catch (InvalidOperationException)
+            {
+                return default(Drink);
+            }
+        }
+        public override Drink Read(int id)
+        {
+            try
+            {
+                return ReadAll().SingleOrDefault(x => x.Id == id);
             }
             catch (ArgumentNullException)
             {
@@ -39,19 +54,26 @@ namespace OGAOE7_HFT_2021221.Repository
             }
         }
 
-        public void Update(Drink drink)
+        public override void Update(Drink drink)
         {
-            Drink oldDrink = Read(drink.Name);
+            Drink oldDrink = Read(drink.Id);
             oldDrink.Price = drink.Price;
             oldDrink.Promotional = drink.Promotional;
             oldDrink.Name = drink.Name;
             ctx.SaveChanges();
         }
 
-        public void Delete(string name)
+        public void DeleteByName(string name)
         {
-            ctx.Drinks.Remove(Read(name));
+            ctx.Drinks.Remove(ReadByName(name));
+            ctx.SaveChanges();
         }
+
+        public override void Delete(int id)
+        {
+            ctx.Drinks.Remove(Read(id));
+            ctx.SaveChanges();
+        }        
         #endregion
     }
 }
