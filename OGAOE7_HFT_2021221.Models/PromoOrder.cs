@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace OGAOE7_HFT_2021221.Models
 {
@@ -18,28 +15,40 @@ namespace OGAOE7_HFT_2021221.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Required]
         public DateTime TimeOfOrder { get; set; }
 
-        public int TotalPrice { get { return (Pizza.Price + Drink.Price) - (Pizza.Price + Drink.Price) * DiscountPercentage / 100; } }
+        //Unfortunately, this getter doesn't work on the Model level because lazy loading prevents getting Drink and Pizza objects, triggers a NullReferenceException. It will be implemented through logic.
+        //[NotMapped]
+        //[JsonIgnore]
+        //public int TotalPrice { get { return (this.Pizza.Price + this.Drink.Price) - (this.Pizza.Price + this.Drink.Price) * DiscountPercentage / 100; } }
 
+        [Required]
         public int DiscountPercentage { get; set; }
 
         //FOREIGN KEY
 
         [Required]
         [ForeignKey(nameof(Pizza))]
-        public string PizzaName { get; set; }
+        public int PizzaId { get; set; }
 
         [Required]
         [ForeignKey(nameof(Drink))]
-        public string DrinkName { get; set; }
+        public int DrinkId { get; set; }
+
+        // MAIN DATA
+        //Unfortunately, this getter doesn't work on the Model level because lazy loading prevents getting Drink and Pizza objects, triggers a NullReferenceException. It will be implemented through logic.
+        //[NotMapped]
+        //[JsonIgnore]
+        //public string MainData => $"[{Id}] : {PizzaName} ({Pizza.Price} HUF) : {DrinkName} ({Drink.Price} HUF) : Discount - {DiscountPercentage}% : Total - {TotalPrice} : Time of order - {TimeOfOrder.ToString("G", CultureInfo.CurrentCulture)}";
 
         // NAVIGATION PROPERTY
-
         [NotMapped]
+        [JsonIgnore]
         public virtual Pizza Pizza { get; set; }
 
         [NotMapped]
+        [JsonIgnore]
         public virtual Drink Drink { get; set; }
 
         public int CompareTo(PromoOrder other)

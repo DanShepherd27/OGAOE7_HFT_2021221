@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace OGAOE7_HFT_2021221.Models
@@ -15,15 +17,28 @@ namespace OGAOE7_HFT_2021221.Models
     public class Drink : IComparable<Drink>
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int Id { get; set; }
+
+        [Required]
         public string Name { get; set; }
 
+        [Required]
         public int Price { get; set; }
 
+        [Required]
         public bool Promotional { get; set; }
+
+        // MAIN DATA
+        //Unfortunately, this getter doesn't work on the Model level because lazy loading prevents getting Drink and Pizza objects, triggers a NullReferenceException. It will be implemented through logic.
+        //[NotMapped]
+        //[JsonIgnore]
+        //public string MainData => $"[{Name}] : Price - {Price} HUF : Promotional - {Promotional} : Number of orders - {Orders.Count}";
 
         // NAVIGATION PROPERTY
 
         [NotMapped]
+        [JsonIgnore]
         public virtual ICollection<PromoOrder> Orders { get; set; }
 
         public Drink()
