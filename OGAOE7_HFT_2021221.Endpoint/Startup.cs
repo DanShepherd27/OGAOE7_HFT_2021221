@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OGAOE7_HFT_2021221.Data;
+using OGAOE7_HFT_2021221.Logic;
+using OGAOE7_HFT_2021221.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +19,17 @@ namespace OGAOE7_HFT_2021221.Endpoint
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
+
+            services.AddTransient<IPizzaLogic, PizzaLogic>();
+            services.AddTransient<IDrinkLogic, DrinkLogic>();
+            services.AddTransient<IPromoOrderLogic, PromoOrderLogic>();
+
+            services.AddTransient<IPizzaRepository, PizzaRepository>();
+            services.AddTransient<IDrinkRepository, DrinkRepository>();
+            services.AddTransient<IPromoOrderRepository, PromoOrderRepository>();
+
+            services.AddTransient<PizzaDbContext, PizzaDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -30,15 +44,12 @@ namespace OGAOE7_HFT_2021221.Endpoint
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
-                {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                //endpoints.MapGet("/", async context =>
+                //{
+                //    await context.Response.WriteAsync("Welcome to the promotional pizza order app!");
+                //});
 
-                endpoints.MapGet("/Drinks", async context =>
-                {
-                    await context.Response.WriteAsync("These are the drinks in JSON format.");
-                });
+                endpoints.MapControllers();
             });
         }
     }
