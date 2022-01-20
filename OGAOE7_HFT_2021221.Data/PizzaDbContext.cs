@@ -25,7 +25,7 @@ namespace OGAOE7_HFT_2021221.Data
             {
                 optionsBuilder
                     .UseLazyLoadingProxies()
-                    .UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\PizzaDB.mdf;Integrated Security=True");
+                    .UseSqlServer(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\PizzaDB.mdf;Integrated Security=True; MultipleActiveResultSets=True");
             }
         }
 
@@ -38,7 +38,7 @@ namespace OGAOE7_HFT_2021221.Data
                 entity.HasMany(pizza => pizza.Orders)
                 .WithOne(promoOrder => promoOrder.Pizza)
                 .HasForeignKey(promoOrder => promoOrder.PizzaId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasIndex(x => x.Name).IsUnique();
             });
@@ -48,7 +48,7 @@ namespace OGAOE7_HFT_2021221.Data
                 entity.HasMany(drink => drink.Orders)
                 .WithOne(promoOrder => promoOrder.Drink)
                 .HasForeignKey(promoOrder => promoOrder.DrinkId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+                .OnDelete(DeleteBehavior.Cascade);
 
                 entity.HasIndex(x => x.Name).IsUnique();
             });
@@ -57,20 +57,20 @@ namespace OGAOE7_HFT_2021221.Data
             //Pizzas
             modelBuilder.Entity<Pizza>().HasData(new List<Pizza>()
             {
-                new Pizza() { Name = "Pizza number 1", Price = 2100 },
-                new Pizza() { Name = "Pizza number 2", Price = 2200 },
-                new Pizza() { Name = "Pizza number 3", Price = 2300 },
-                new Pizza() { Name = "Pizza number 4", Price = 2400 }
+                new Pizza() { Id=1, Name = "Margherita", Price = 2100 },
+                new Pizza() { Id=2, Name = "Carbonara", Price = 2200 },
+                new Pizza() { Id=3, Name = "Fattoria", Price = 2300 },
+                new Pizza() { Id=4, Name = "Prosciutto e Funghi", Price = 2400 }
             });
 
             //Drinks
             modelBuilder.Entity<Drink>().HasData(new List<Drink>()
             {
-                new Drink() { Name = "Coca Cola", Price = 390, Promotional = true },
-                new Drink() { Name = "Fanta Orange", Price = 390, Promotional = true },
-                new Drink() { Name = "Sprite", Price = 390, Promotional = true },
-                new Drink() { Name = "Dr. Pepper", Price = 390, Promotional = true },
-                new Drink() { Name = "Cafe macchiato", Price = 460, Promotional = false }
+                new Drink() { Id=1,Name = "Coca Cola", Price = 390, Promotional = true },
+                new Drink() { Id=2, Name = "Fanta Orange", Price = 390, Promotional = true },
+                new Drink() { Id=3,Name = "Sprite", Price = 390, Promotional = true },
+                new Drink() { Id=4, Name = "Dr. Pepper", Price = 390, Promotional = true },
+                new Drink() { Id=5, Name = "Cafe macchiato", Price = 460, Promotional = false }
             });
 
             //Orders
