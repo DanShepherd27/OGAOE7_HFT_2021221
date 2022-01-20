@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OGAOE7_HFT_2021221.Logic
 {
-    public abstract class Logic<T> : ILogic<T> where T: class
+    public abstract class Logic<T> : ILogic<T> where T : class
     {
         protected IRepository<T> repo;
         public Logic(IRepository<T> repo)
@@ -20,9 +20,26 @@ namespace OGAOE7_HFT_2021221.Logic
             repo.Create(newItem);
         }
 
-        public IQueryable<T> ReadAll()
+        public IEnumerable<T> Read(int id)
+        {
+            return new List<T> { repo.Read(id) };
+        }
+
+        public IEnumerable<T> ReadAll()
         {
             return repo.ReadAll();
         }
+
+        public void Update(T newItem)
+        {
+            repo.Update(newItem);
+        }
+
+        public void Delete(int id)
+        {
+            repo.Delete(id);
+        }
+
+        public abstract IEnumerable<string> MainData(int id);
     }
 }

@@ -8,8 +8,16 @@ namespace OGAOE7_HFT_2021221.Logic
 {
     public interface ILogic<T> where T : class
     {
-        // Common CRUD
-        IQueryable<T> ReadAll();
+        #region Common CRUD
         void Create(T newItem);
+        IEnumerable<T> Read(int id);
+        IEnumerable<T> ReadAll();
+        void Update(T newItem);
+        void Delete(int id);
+        #endregion
+
+        #region Non-CRUD
+        IEnumerable<string> MainData(int id);
+        #endregion
     }
 }

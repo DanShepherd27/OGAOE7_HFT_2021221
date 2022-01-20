@@ -10,12 +10,13 @@ namespace OGAOE7_HFT_2021221.Logic
     public interface IPizzaLogic : ILogic<Pizza>
     {
         #region CRUD
-        Pizza Read(string name);
-        void Update(Pizza pizza);
+        IEnumerable<Pizza> Read(string name);
         void Delete(string name);
         #endregion
 
         #region NON-CRUD
+        public IEnumerable<string> PizzaStatsForToday(DateTime today);
+        IEnumerable<string> MainData(string name);
         #endregion
     }
 }

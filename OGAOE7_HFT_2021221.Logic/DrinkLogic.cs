@@ -18,44 +18,37 @@ namespace OGAOE7_HFT_2021221.Logic
         }
 
         #region CRUD
+        public IEnumerable<Drink> Read(string name)
+        {
+            return new List<Drink> { (this.repo as IDrinkRepository).Read(name) };
+        }
+
         public void Delete(string name)
         {
-            (base.repo as IDrinkRepository).Delete(name);
-        }
-
-        public Drink Read(string name)
-        {
-            return (base.repo as IDrinkRepository).Read(name);
-        }
-
-        public void Update(Drink drink)
-        {
-            (base.repo as IDrinkRepository).Update(drink);
+            (this.repo as IDrinkRepository).Delete(name);
         }
         #endregion
 
         #region NON-CRUD
-        public int DrinkRevenueInTimePeriod(DateTime start, DateTime end)
+        public IEnumerable<int> DrinkRevenueInTimePeriod(DateTime start, DateTime end)
         {
-            return (from drinks in ReadAll()
-                    join orders in promoOrderRepository.ReadAll() on drinks.Name equals orders.DrinkName
-                    where orders.TimeOfOrder >= start && orders.TimeOfOrder <= end
-                    select drinks.Price * orders.DiscountPercentage / 100).Sum();
+            return new List<int>{
+                (from order in promoOrderRepository.ReadAll()
+                where order.TimeOfOrder >= start && order.TimeOfOrder <= end
+                select order.Drink.Price * (100 - order.DiscountPercentage) / 100)
+                .Sum()
+            };
         }
 
-        public IEnumerable<Drink> MostPopularDrinkWithACertainPizza(Pizza pizza)
+        public override IEnumerable<string> MainData(int id)
         {
-            var q = (from drinks in ReadAll()
-                     join orders in promoOrderRepository.ReadAll() on drinks.Name equals orders.DrinkName
-                     where orders.PizzaName == pizza.Name
-                     select drinks).ToList();
-
-            return new List<Drink>{
-                    (from drink in q
-                    group drink by drink into g
-                    orderby g.Count()
-                    select g).First().Key
-            };
+            Drink d = this.Read(id).First();
+            return new List<string> { $"[{d.Name}]\t{d.Price} HUF\t{d.Promotional}\t{d.Orders.Count}" };
+        }
+        public IEnumerable<string> MainData(string name)
+        {
+            Drink d = this.Read(name).First();
+            return new List<string> { $"[{d.Name}]\t{d.Price} HUF\t{d.Promotional}\t{d.Orders.Count}" };
         }
         #endregion
 

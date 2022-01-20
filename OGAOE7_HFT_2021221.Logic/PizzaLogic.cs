@@ -20,45 +20,39 @@ namespace OGAOE7_HFT_2021221.Logic
         #region CRUD
         public void Delete(string name)
         {
-            (base.repo as IPizzaRepository).Delete(name);
+            (this.repo as IPizzaRepository).Delete(name);
         }
 
-        public Pizza Read(string name)
+        public IEnumerable<Pizza> Read(string name)
         {
-            return (base.repo as IPizzaRepository).Read(name);
-        }
-
-        public void Update(Pizza pizza)
-        {
-            (base.repo as IPizzaRepository).Update(pizza);
+            return new List<Pizza> { (this.repo as IPizzaRepository).Read(name) };
         }
 
         #endregion
 
         #region NON-CRUD
-        public IEnumerable<Pizza> MostPopularPizzaWithACertainDrink(Drink drink)
+        /// <summary>
+        /// This method shows how many pizzas got sold from each type on a certain date.
+        /// </summary>
+        /// <param name="today">Today's date. The time component can be anything. </param>
+        /// <returns>Returns a string for each pizza type. Each string looks like this: PizzaName + "\t" + Quantity</returns>
+        public IEnumerable<string> PizzaStatsForToday(DateTime today)
         {
-            var q = (from pizza in ReadAll()
-                     join orders in promoOrderRepository.ReadAll() on pizza.Name equals orders.PizzaName
-                     where orders.DrinkName == drink.Name
-                     select pizza).ToList();
-
-            return new List<Pizza>{
-                    (from pizza in q
-                     group pizza by pizza into g
-                     orderby g.Count()
-                     select g).First().Key
-            };
+            return from order in promoOrderRepository.ReadAll().ToList()
+                   where order.TimeOfOrder.Date == today.Date
+                   group order by order.Pizza into g
+                   select g.First().Pizza.Name + "\t" + g.Count();
         }
-        public IEnumerable<Tuple<Pizza, int>> PizzasStatsForToday(DateTime today)
-        {
-            var q = from orders in promoOrderRepository.ReadAll()
-                    join pizzas in ReadAll() on orders.PizzaName equals pizzas.Name
-                    where orders.TimeOfOrder.Date == today.Date
-                    group pizzas by pizzas into g
-                    select new Tuple<Pizza, int>(g.Key, g.Count());
 
-            return q;
+        public IEnumerable<string> MainData(string name)
+        {
+            Pizza p = this.Read(name).First();
+            return new List<string> { $"[{p.Name}]\t{p.Price} HUF\t{p.Promotional}\t{p.Orders.Count}" };
+        }
+        public override IEnumerable<string> MainData(int id)
+        {
+            Pizza p = this.Read(id).First();
+            return new List<string> { $"[{p.Name}]\t{p.Price} HUF\t{p.Promotional}\t{p.Orders.Count}" };
         }
         #endregion
 

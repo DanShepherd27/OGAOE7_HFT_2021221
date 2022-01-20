@@ -10,12 +10,13 @@ namespace OGAOE7_HFT_2021221.Logic
     public interface IPromoOrderLogic : ILogic<PromoOrder>
     {
         #region CRUD
-        PromoOrder Read(int id);
-        void Update(PromoOrder promoOrder);
-        void Delete(int id);
         #endregion
 
         #region NON-CRUD
+        public IEnumerable<Pizza> MostPopularPizzaWithACertainDrink(Drink drink);
+        public IEnumerable<Drink> MostPopularDrinkWithACertainPizza(Pizza pizza);
+        public IEnumerable<string> MostOrderedComboEver();
+        IEnumerable<int> TotalPrice(int id);
         #endregion
     }
 }

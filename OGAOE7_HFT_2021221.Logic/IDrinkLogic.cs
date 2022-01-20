@@ -10,12 +10,13 @@ namespace OGAOE7_HFT_2021221.Logic
     public interface IDrinkLogic : ILogic<Drink>
     {
         #region CRUD
-        Drink Read(string name);
-        void Update(Drink drink);
+        IEnumerable<Drink> Read(string name);
         void Delete(string name);
         #endregion
 
-        #region NON-CRUD
+        #region NON-CRUD        
+        public IEnumerable<int> DrinkRevenueInTimePeriod(DateTime start, DateTime end);        
+        IEnumerable<string> MainData(string name);
         #endregion
     }
 }
