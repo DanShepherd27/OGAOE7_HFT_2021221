@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OGAOE7_HFT_2021221.Logic;
+using OGAOE7_HFT_2021221.Logic.Exceptions;
 using OGAOE7_HFT_2021221.Models;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         [HttpGet("id/{id}")]
         public IEnumerable<Drink> Get(int id)
         {
-            return dl.Read(id);
+                return dl.Read(id);
         }
 
         // POST: /drink

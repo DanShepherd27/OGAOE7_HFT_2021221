@@ -1,11 +1,7 @@
 ﻿using OGAOE7_HFT_2021221.Data;
 using OGAOE7_HFT_2021221.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace OGAOE7_HFT_2021221.Repository
 {
@@ -40,7 +36,7 @@ namespace OGAOE7_HFT_2021221.Repository
 
         public override IQueryable<PromoOrder> ReadAll()
         {
-            var q = base.ReadAll()/*.Include(x => x.Drink).Include(x=>x.Pizza)*/; //Kell ide az include-os eager loading?
+            var q = base.ReadAll();
             return q;
         }
         public override void Update(PromoOrder promoOrder)
