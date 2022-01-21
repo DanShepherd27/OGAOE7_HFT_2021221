@@ -1,10 +1,6 @@
-﻿using OGAOE7_HFT_2021221.Data;
-using OGAOE7_HFT_2021221.Repository;
-using OGAOE7_HFT_2021221.Logic;
-using System;
+﻿using System;
 using OGAOE7_HFT_2021221.Models;
 using ConsoleTools;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using BetterConsoleTables;
@@ -54,9 +50,10 @@ namespace OGAOE7_HFT_2021221.Client
             .Add("Search for an order", () =>
             {
                 Console.WriteLine("Order ID: ");
-                List<PromoOrder> orders = rest.Get<PromoOrder>($"order/{Console.ReadLine()}");
+                List<PromoOrder> order = rest.Get<PromoOrder>($"order/{Console.ReadLine()}");
                 Console.WriteLine("Result:");
-                OrdersToConsole(rest, orders);
+                if (order.First() != null) OrdersToConsole(rest, order);
+                else { Console.WriteLine("ERROR: No result could be found."); Console.ReadLine(); }
             })
             .Add("Add new pizza", () => CreatePizza(rest, discount))
             .Add("Add new drink", () => CreateDrink(rest, discount))
@@ -85,18 +82,34 @@ namespace OGAOE7_HFT_2021221.Client
                 {
                     Console.WriteLine("Please select only from promotional items!");
                     Console.ReadLine();
-                    Drink drink = DrinkSelector(rest);
-                    Pizza response = rest.Post<Drink, Pizza>(drink, "noncrud/mostpopularpizzawithacertaindrink").First();
-                    Console.WriteLine($"{response.Name} is the most popular pizza with {drink.Name}");
+                    (Drink drink, bool succ) = DrinkSelector(rest);
+                    if (succ)
+                    {
+                        Pizza response = rest.Post<Drink, Pizza>(drink, "noncrud/mostpopularpizzawithacertaindrink").First();
+                        Console.WriteLine($"{response.Name} is the most popular pizza with {drink.Name}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("ERROR: Couldn't get this item. Press enter to go back...");
+                    }
+
                     Console.ReadLine();
                 })
                 .Add("Most popular drink with a certain pizza", () =>
                 {
                     Console.WriteLine("Please select only from promotional items!");
                     Console.ReadLine();
-                    Pizza pizza = PizzaSelector(rest);
-                    Drink response = rest.Post<Pizza, Drink>(pizza, "noncrud/mostpopulardrinkwithacertainpizza").First();
-                    Console.WriteLine($"{response.Name} is the most popular drink with {pizza.Name}");
+                    (Pizza pizza, bool succ) = PizzaSelector(rest);
+                    if (succ)
+                    {
+                        Drink response = rest.Post<Pizza, Drink>(pizza, "noncrud/mostpopulardrinkwithacertainpizza").First();
+                        Console.WriteLine($"{response.Name} is the most popular drink with {pizza.Name}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("ERROR: Couldn't get this item. Press enter to go back...");
+                    }
+
                     Console.ReadLine();
                 })
                 .Add("Pizza stats for today", () =>
@@ -121,6 +134,7 @@ namespace OGAOE7_HFT_2021221.Client
                     string endString = Console.ReadLine();
                     DateTime end = new DateTime();
                     DateTime.TryParseExact(endString, "yyyy:MM:dd", null, DateTimeStyles.None, out end);
+                    end = end.Add(new TimeSpan(23, 59, 59));
                     int revenue = rest.Get<int>($"noncrud/drinkrevenueintimeperiod/{start}/{end}").First();
 
                     Table table = new Table("Start date", "End date", "Revenue")
@@ -149,7 +163,7 @@ namespace OGAOE7_HFT_2021221.Client
                 });
         }
 
-        private static Drink DrinkSelector(RestService rest)
+        private static (Drink drink, bool success) DrinkSelector(RestService rest)
         {
             string identify = "";
             while (identify != "name" && identify != "id")
@@ -161,17 +175,41 @@ namespace OGAOE7_HFT_2021221.Client
             {
                 Console.WriteLine("Please specify the name of the drink:");
                 string name = Console.ReadLine();
-                return CloneObject<Drink>(rest.Get<Drink>($"drink/name/{name}").First());
+                try
+                {
+                    Drink drink = rest.Get<Drink>($"drink/name/{name}").First();
+                    return (CloneObject<Drink>(drink), true);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return (default(Drink), false);
+                }
             }
             else
             {
                 Console.WriteLine("Please specify the id of the drink:");
-                int id = int.Parse(Console.ReadLine());
-                return CloneObject<Drink>(rest.Get<Drink>($"drink/id/{id}").First());
+                bool success = false;
+                int id = 0;
+                while (!success)
+                    success = int.TryParse(Console.ReadLine(), out id);
+                Drink drink;
+                try
+                {
+                    drink = rest.Get<Drink>($"drink/id/{id}").First();
+                    return (CloneObject<Drink>(drink), true);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return (default(Drink), false);
+                }
+
+
             }
         }
 
-        private static Pizza PizzaSelector(RestService rest)
+        private static (Pizza pizza, bool success) PizzaSelector(RestService rest)
         {
             string identify = "";
             while (identify != "name" && identify != "id")
@@ -183,20 +221,45 @@ namespace OGAOE7_HFT_2021221.Client
             {
                 Console.WriteLine("Please specify the name of the pizza:");
                 string name = Console.ReadLine();
-                return CloneObject<Pizza>(rest.Get<Pizza>($"pizza/name/{name}").First());
+                try
+                {
+                    return (CloneObject<Pizza>(rest.Get<Pizza>($"pizza/name/{name}").First()), true);
+                }
+                catch (Exception e)
+                {
+
+                    Console.WriteLine(e.Message);
+                    return (default(Pizza), false);
+                }
+
             }
             else
             {
                 Console.WriteLine("Please specify the id of the pizza:");
-                int id = int.Parse(Console.ReadLine());
-                return CloneObject<Pizza>(rest.Get<Pizza>($"pizza/id/{id}").First());
+                bool success = false;
+                int id = 0;
+                while (!success)
+                    success = int.TryParse(Console.ReadLine(), out id);
+                try
+                {
+                    return (CloneObject<Pizza>(rest.Get<Pizza>($"pizza/id/{id}").First()), true);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return (default(Pizza), false);
+                }
+
             }
         }
 
         private static void DeleteOrder(RestService rest, int discount)
         {
             Console.WriteLine("Please specify the id of the order:");
-            int id = int.Parse(Console.ReadLine());
+            bool success = false;
+            int id = 0;
+            while (!success)
+                success = int.TryParse(Console.ReadLine(), out id);
             rest.Delete(id, "order/id");
             AdminMenu(rest, discount).Show();
         }
@@ -219,7 +282,10 @@ namespace OGAOE7_HFT_2021221.Client
             else
             {
                 Console.WriteLine("Please specify the id of the pizza:");
-                int id = int.Parse(Console.ReadLine());
+                bool success = false;
+                int id = 0;
+                while (!success)
+                    success = int.TryParse(Console.ReadLine(), out id);
                 rest.Delete(id, "pizza/id");
                 Console.WriteLine("Item deleted successfully!");
                 Console.ReadLine();
@@ -247,7 +313,10 @@ namespace OGAOE7_HFT_2021221.Client
             else
             {
                 Console.WriteLine("Please specify the id of the drink:");
-                int id = int.Parse(Console.ReadLine());
+                bool success = false;
+                int id = 0;
+                while (!success)
+                    success = int.TryParse(Console.ReadLine(), out id);
                 rest.Delete(id, "drink/id");
                 Console.WriteLine("Item deleted successfully!");
                 Console.ReadLine();
@@ -280,7 +349,10 @@ namespace OGAOE7_HFT_2021221.Client
 
             CreateOrder_SelectPizza(rest, po, discount).Show();
 
-            Console.WriteLine("Total price: " + rest.Get<int>($"noncrud/totalprice/{po.Id}").First() + " HUF");
+            try { Console.WriteLine("Total price: " + rest.Get<int>($"noncrud/totalprice/{po.Id}").First() + " HUF"); }
+            catch (Exception e) { Console.WriteLine(e.Message); }
+
+            Console.ReadLine();
 
         }
         private static ConsoleMenu CreateOrder_SelectPizza(RestService rest, PromoOrder po, int discount)
@@ -358,39 +430,74 @@ namespace OGAOE7_HFT_2021221.Client
         #endregion
         private static void CreatePizza(RestService rest, int discount)
         {
-            Pizza pizza = new Pizza();
-            Console.WriteLine("Name:");
-            pizza.Name = Console.ReadLine();
-            Console.WriteLine("Price: ");
-            pizza.Price = int.Parse(Console.ReadLine());
-            Console.WriteLine("PRESS ENTER TO SAVE");
-            Console.ReadLine();
-            rest.Post<Pizza>(pizza, "pizza");
-            AdminMenu(rest, discount).Show();
+            try
+            {
+                Pizza pizza = new Pizza();
+                Console.WriteLine("Name:");
+                pizza.Name = Console.ReadLine();
+                Console.WriteLine("Price: ");
+
+                bool success = false;
+                int parsedValue = 0;
+                while (!success)
+                    success = int.TryParse(Console.ReadLine(), out parsedValue);
+                pizza.Price = parsedValue;
+
+                Console.WriteLine("PRESS ENTER TO SAVE");
+                rest.Post<Pizza>(pizza, "pizza");
+                Console.WriteLine("New pizza added successfully!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                Console.ReadLine();
+                AdminMenu(rest, discount).Show();
+            }            
 
         }
         private static void CreateDrink(RestService rest, int discount)
         {
-            Drink drink = new Drink();
-            Console.WriteLine("Name:");
-            drink.Name = Console.ReadLine();
-            Console.WriteLine("Price: ");
-            drink.Price = int.Parse(Console.ReadLine());
-            Console.WriteLine("Do you want it to be part of the promotional offer? (y/n):");
-            if (Console.ReadLine() == "y")
-                drink.Promotional = true;
-            else if (Console.ReadLine() == "n")
-                drink.Promotional = false;
-            else
+            try
             {
-                Console.WriteLine(">> INPUT INCORRECT! Value automatically set to false.");
-                drink.Promotional = false;
-            }
+                Drink drink = new Drink();
+                Console.WriteLine("Name:");
+                drink.Name = Console.ReadLine();
+                Console.WriteLine("Price: ");
 
-            Console.WriteLine("PRESS ENTER TO SAVE");
-            Console.ReadLine();
-            rest.Post<Drink>(drink, "pizza");
-            AdminMenu(rest, discount).Show();
+                bool success = false;
+                int parsedValue = 0;
+                while (!success)
+                    success = int.TryParse(Console.ReadLine(), out parsedValue);
+                drink.Price = parsedValue;
+
+                Console.WriteLine("Do you want it to be part of the promotional offer? (y/n):");
+                string answer = Console.ReadLine();
+                if (answer == "y")
+                    drink.Promotional = true;
+                else if (answer == "n")
+                    drink.Promotional = false;
+                else
+                {
+                    Console.WriteLine(">> INPUT INCORRECT! Value automatically set to false.");
+                    drink.Promotional = false;
+                }
+
+                Console.WriteLine("PRESS ENTER TO SAVE");
+                rest.Post<Drink>(drink, "drink");
+                Console.WriteLine("New drink added successfully!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            finally
+            {
+                Console.ReadLine();
+                AdminMenu(rest, discount).Show();
+            }            
 
         }
 
@@ -434,8 +541,11 @@ namespace OGAOE7_HFT_2021221.Client
         private static void UpdateOrder(RestService rest, int discount)
         {
             Console.WriteLine("Please specify the order's ID:");
-            int id = int.Parse(Console.ReadLine());
-            PromoOrder po = CloneObject<PromoOrder>(rest.Get<PromoOrder>($"order/{id}").First());
+            bool success = false;
+            int parsedValue = 0;
+            while (!success)
+                success = int.TryParse(Console.ReadLine(), out parsedValue);
+            PromoOrder po = CloneObject<PromoOrder>(rest.Get<PromoOrder>($"order/{parsedValue}").First());
             UpdateOrder_Menu(rest, po, discount).Show();
         }
         private static ConsoleMenu UpdateOrder_Menu(RestService rest, PromoOrder po, int discount)
@@ -447,7 +557,13 @@ namespace OGAOE7_HFT_2021221.Client
             .Add("DiscountPercentage", () =>
             {
                 Console.WriteLine("Set a custom discount percentage (only for this order): ");
-                po.DiscountPercentage = int.Parse(Console.ReadLine());
+
+                bool success = false;
+                int parsedValue = 0;
+                while (!success)
+                    success = int.TryParse(Console.ReadLine(), out parsedValue);
+                po.DiscountPercentage = parsedValue;
+
                 Console.WriteLine($"The new discount percentage is {po.DiscountPercentage}%");
                 Console.ReadLine();
             })
@@ -536,8 +652,14 @@ namespace OGAOE7_HFT_2021221.Client
         #region UpdatePizza
         private static void UpdatePizza(RestService rest, int discount)
         {
-            Pizza pizza = PizzaSelector(rest);
-            UpdatePizza_Menu(rest, pizza, discount).Show();
+            (Pizza pizza, bool succ) = PizzaSelector(rest);
+            if (succ) UpdatePizza_Menu(rest, pizza, discount).Show();
+            else
+            {
+                Console.WriteLine("ERROR: Can't update this item. Press enter to go back...");
+                Console.ReadLine();
+                AdminMenu(rest, discount).Show();
+            }
         }
         private static ConsoleMenu UpdatePizza_Menu(RestService rest, Pizza pizza, int discount)
         {
@@ -552,7 +674,13 @@ namespace OGAOE7_HFT_2021221.Client
             .Add("Price", () =>
             {
                 Console.WriteLine("Change the price of the selected pizza: ");
-                pizza.Price = int.Parse(Console.ReadLine());
+
+                bool success = false;
+                int parsedValue = 0;
+                while (!success)
+                    success = int.TryParse(Console.ReadLine(), out parsedValue);
+                pizza.Price = parsedValue;
+
                 Console.WriteLine($"The new price is {pizza.Price} HUF.");
                 Console.ReadLine();
             })
@@ -576,9 +704,14 @@ namespace OGAOE7_HFT_2021221.Client
         #region UpdateDrink
         private static void UpdateDrink(RestService rest, int discount)
         {
-            Drink drink = DrinkSelector(rest);
-
-            UpdateDrink_Menu(rest, drink, discount).Show();
+            (Drink drink, bool succ) = DrinkSelector(rest);
+            if (succ) UpdateDrink_Menu(rest, drink, discount).Show();
+            else
+            {
+                Console.WriteLine("ERROR: Can't update this item. Press enter to go back...");
+                Console.ReadLine();
+                AdminMenu(rest, discount).Show();
+            }
         }
         private static ConsoleMenu UpdateDrink_Menu(RestService rest, Drink drink, int discount)
         {
@@ -593,7 +726,13 @@ namespace OGAOE7_HFT_2021221.Client
             .Add("Price", () =>
             {
                 Console.WriteLine("Change the price of the selected drink: ");
-                drink.Price = int.Parse(Console.ReadLine());
+
+                bool success = false;
+                int parsedValue = 0;
+                while (!success)
+                    success = int.TryParse(Console.ReadLine(), out parsedValue);
+                drink.Price = parsedValue;
+
                 Console.WriteLine($"The new price is {drink.Price} HUF.");
                 Console.ReadLine();
             })
@@ -634,6 +773,7 @@ namespace OGAOE7_HFT_2021221.Client
         private static T CloneObject<T>(T input) where T : class
         {
             T clone = Activator.CreateInstance(typeof(T)) as T;
+
             for (int i = 0; i < input.GetType().GetProperties().Length; i++)
             {
                 var value = typeof(T).GetProperties()[i].GetValue(input);
