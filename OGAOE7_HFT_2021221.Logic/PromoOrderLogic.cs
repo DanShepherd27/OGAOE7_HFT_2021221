@@ -1,26 +1,28 @@
-﻿using OGAOE7_HFT_2021221.Models;
+﻿using OGAOE7_HFT_2021221.Logic.Exceptions;
+using OGAOE7_HFT_2021221.Models;
 using OGAOE7_HFT_2021221.Repository;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OGAOE7_HFT_2021221.Logic
 {
     public class PromoOrderLogic : Logic<PromoOrder>, IPromoOrderLogic
     {
-        IPizzaRepository pizzaRepository;
-        IDrinkRepository drinkRepository;
-        public PromoOrderLogic(IPromoOrderRepository repo, IPizzaRepository pizzaRepository, IDrinkRepository drinkRepository) : base(repo)
+        public PromoOrderLogic(IPromoOrderRepository repo) : base(repo)
         {
             this.repo = repo;
-            this.pizzaRepository = pizzaRepository;
-            this.drinkRepository = drinkRepository;
         }
 
         #region CRUD
+        public override void Create(PromoOrder newItem)
+        {
+            if (newItem.DiscountPercentage < 0) throw new UnsupportedValueException(newItem.Id);
+            if (newItem.PizzaId <= 0) throw new UnsupportedValueException(newItem.Id);
+            if (newItem.DrinkId <= 0) throw new UnsupportedValueException(newItem.Id);
+            base.Create(newItem);
+        }
         #endregion
 
         #region NON-CRUD
@@ -50,6 +52,29 @@ namespace OGAOE7_HFT_2021221.Logic
                  group drink by drink.Id into g
                  orderby g.Count() descending
                  select g.First()).FirstOrDefault()
+            };
+        }
+
+        /// <summary>
+        /// This method shows how many pizzas got sold from each type on a certain date.
+        /// </summary>
+        /// <param name="today">The requested date. The time component can be anything. For today's date, call with DateTime.Now</param>
+        /// <returns>Returns a string for each pizza type. Each string looks like this: PizzaName + "\t" + Quantity</returns>
+        public IEnumerable<string> PizzaStatsForToday(DateTime today)
+        {
+            return from order in ReadAll().ToList()
+                   where order.TimeOfOrder.Date == today.Date
+                   group order by order.Pizza.Id into g
+                   orderby g.Count() descending
+                   select g.First().Pizza.Name + "\t" + g.Count();
+        }
+        public IEnumerable<int> DrinkRevenueInTimePeriod(DateTime start, DateTime end)
+        {
+            return new List<int>{
+                (from order in this.ReadAll()
+                where order.TimeOfOrder >= start && order.TimeOfOrder <= end
+                select order.Drink.Price * (100 - order.DiscountPercentage) / 100)
+                .Sum()
             };
         }
         public override IEnumerable<string> MainData(int id)

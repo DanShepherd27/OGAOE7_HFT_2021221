@@ -15,6 +15,8 @@ namespace OGAOE7_HFT_2021221.Logic
         #region NON-CRUD
         public IEnumerable<Pizza> MostPopularPizzaWithACertainDrink(Drink drink);
         public IEnumerable<Drink> MostPopularDrinkWithACertainPizza(Pizza pizza);
+        public IEnumerable<string> PizzaStatsForToday(DateTime today);
+        public IEnumerable<int> DrinkRevenueInTimePeriod(DateTime start, DateTime end);
         public IEnumerable<string> MostOrderedComboEver();
         IEnumerable<int> TotalPrice(int id);
         #endregion

@@ -15,7 +15,6 @@ namespace OGAOE7_HFT_2021221.Logic
         #endregion
 
         #region NON-CRUD
-        public IEnumerable<string> PizzaStatsForToday(DateTime today);
         IEnumerable<string> MainData(string name);
         #endregion
     }

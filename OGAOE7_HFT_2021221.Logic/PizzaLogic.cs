@@ -1,20 +1,17 @@
-﻿using OGAOE7_HFT_2021221.Models;
+﻿using OGAOE7_HFT_2021221.Logic.Exceptions;
+using OGAOE7_HFT_2021221.Models;
 using OGAOE7_HFT_2021221.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OGAOE7_HFT_2021221.Logic
 {
     public class PizzaLogic : Logic<Pizza>, IPizzaLogic
     {
-        IPromoOrderRepository promoOrderRepository;
-        public PizzaLogic(IPizzaRepository repo, IPromoOrderRepository promoOrderRepository) : base(repo)
+        public PizzaLogic(IPizzaRepository repo) : base(repo)
         {
             this.repo = repo;
-            this.promoOrderRepository = promoOrderRepository;
         }
 
         #region CRUD
@@ -28,21 +25,16 @@ namespace OGAOE7_HFT_2021221.Logic
             return new List<Pizza> { (this.repo as IPizzaRepository).Read(name) };
         }
 
+        public override void Create(Pizza newItem)
+        {
+            if (newItem.Id < 0) throw new UnsupportedValueException(newItem.Id);
+            if (newItem.Name == "") throw new Exception("Item name cannot be empty string.");
+            if (newItem.Price <= 0) throw new UnsupportedValueException(newItem.Price);
+            base.Create(newItem);
+        }
         #endregion
 
         #region NON-CRUD
-        /// <summary>
-        /// This method shows how many pizzas got sold from each type on a certain date.
-        /// </summary>
-        /// <param name="today">Today's date. The time component can be anything. </param>
-        /// <returns>Returns a string for each pizza type. Each string looks like this: PizzaName + "\t" + Quantity</returns>
-        public IEnumerable<string> PizzaStatsForToday(DateTime today)
-        {
-            return from order in promoOrderRepository.ReadAll().ToList()
-                   where order.TimeOfOrder.Date == today.Date
-                   group order by order.Pizza into g
-                   select g.First().Pizza.Name + "\t" + g.Count();
-        }
 
         public IEnumerable<string> MainData(string name)
         {

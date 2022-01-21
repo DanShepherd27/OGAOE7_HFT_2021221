@@ -14,8 +14,7 @@ namespace OGAOE7_HFT_2021221.Logic
         void Delete(string name);
         #endregion
 
-        #region NON-CRUD        
-        public IEnumerable<int> DrinkRevenueInTimePeriod(DateTime start, DateTime end);        
+        #region NON-CRUD      
         IEnumerable<string> MainData(string name);
         #endregion
     }

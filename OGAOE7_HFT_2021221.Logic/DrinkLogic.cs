@@ -1,4 +1,5 @@
-﻿using OGAOE7_HFT_2021221.Models;
+﻿using OGAOE7_HFT_2021221.Logic.Exceptions;
+using OGAOE7_HFT_2021221.Models;
 using OGAOE7_HFT_2021221.Repository;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,9 @@ namespace OGAOE7_HFT_2021221.Logic
 {
     public class DrinkLogic : Logic<Drink>, IDrinkLogic
     {
-        IPromoOrderRepository promoOrderRepository;
-        public DrinkLogic(IDrinkRepository repo, IPromoOrderRepository promoOrderRepository) : base(repo)
+        public DrinkLogic(IDrinkRepository repo) : base(repo)
         {
             this.repo = repo;
-            this.promoOrderRepository = promoOrderRepository;
         }
 
         #region CRUD
@@ -27,19 +26,17 @@ namespace OGAOE7_HFT_2021221.Logic
         {
             (this.repo as IDrinkRepository).Delete(name);
         }
+
+        public override void Create(Drink newItem)
+        {
+            if (newItem.Id < 0) throw new UnsupportedValueException(newItem.Id);
+            if (newItem.Name == "") throw new Exception("Item name cannot be empty string.");
+            if (newItem.Price <= 0) throw new UnsupportedValueException(newItem.Price);
+            base.Create(newItem);
+        }
         #endregion
 
         #region NON-CRUD
-        public IEnumerable<int> DrinkRevenueInTimePeriod(DateTime start, DateTime end)
-        {
-            return new List<int>{
-                (from order in promoOrderRepository.ReadAll()
-                where order.TimeOfOrder >= start && order.TimeOfOrder <= end
-                select order.Drink.Price * (100 - order.DiscountPercentage) / 100)
-                .Sum()
-            };
-        }
-
         public override IEnumerable<string> MainData(int id)
         {
             Drink d = this.Read(id).First();
