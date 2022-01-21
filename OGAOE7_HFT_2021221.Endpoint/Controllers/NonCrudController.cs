@@ -43,14 +43,14 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         [HttpPost]
         public IEnumerable<string> PizzaStatsForToday([FromBody] DateTime today)
         {
-            return pl.PizzaStatsForToday(today);
+            return pol.PizzaStatsForToday(today);
         }
 
         //GET: noncrud/drinkrevenueintimeperiod/{start}/{end}
         [HttpGet("{start}/{end}")]
         public IEnumerable<int> DrinkRevenueInTimePeriod(DateTime start, DateTime end)
         {
-            return dl.DrinkRevenueInTimePeriod(start, end);
+            return pol.DrinkRevenueInTimePeriod(start, end);
         }
 
         //GET: noncrud/mostorderedcomboever
