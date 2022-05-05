@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31702.278
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGAOE7_HFT_2021221.Client", "OGAOE7_HFT_2021221.Client\OGAOE7_HFT_2021221.Client.csproj", "{17DBD79E-9655-474C-9239-1AFBD9A5A135}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OGAOE7_HFT_2021221.Client", "OGAOE7_HFT_2021221.Client\OGAOE7_HFT_2021221.Client.csproj", "{17DBD79E-9655-474C-9239-1AFBD9A5A135}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OGAOE7_HFT_2021221.Models", "OGAOE7_HFT_2021221.Models\OGAOE7_HFT_2021221.Models.csproj", "{E7B2BCBC-B375-4D5D-BA9F-50FB3FBD2E0C}"
 EndProject
@@ -27,6 +27,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{6A9485
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGAOE7_HFT_2021221.WPFClient", "WPFClient\OGAOE7_HFT_2021221.WPFClient.csproj", "{CBD286A8-D25E-46C2-BCFC-B1D71FD7763C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,10 @@ Global
 		{3F4EF0A1-9DA4-4D44-9943-7247012E6261}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3F4EF0A1-9DA4-4D44-9943-7247012E6261}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3F4EF0A1-9DA4-4D44-9943-7247012E6261}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBD286A8-D25E-46C2-BCFC-B1D71FD7763C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBD286A8-D25E-46C2-BCFC-B1D71FD7763C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBD286A8-D25E-46C2-BCFC-B1D71FD7763C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBD286A8-D25E-46C2-BCFC-B1D71FD7763C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{763CF6FF-DE91-4899-9B00-6BD37C8AD184} = {C849B1A6-92CF-4422-950F-D209E4F994F5}
 		{544FF14E-E837-418C-AB9E-CF6072920F51} = {C849B1A6-92CF-4422-950F-D209E4F994F5}
 		{3F4EF0A1-9DA4-4D44-9943-7247012E6261} = {C849B1A6-92CF-4422-950F-D209E4F994F5}
+		{CBD286A8-D25E-46C2-BCFC-B1D71FD7763C} = {BC31EFE9-1111-4A52-A98B-14C74AF65805}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E8501F8F-BE70-4B19-83E3-43A1897129FC}

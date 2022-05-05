@@ -1,0 +1,18 @@
+﻿<Window x:Class="OGAOE7_HFT_2021221.WPFClient.DrinkCreateOrUpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OGAOE7_HFT_2021221.WPFClient"
+        mc:Ignorable="d"
+        Title="DrinkCreateOrUpdateWindow" Height="450" Width="800">
+    <StackPanel x:Name="sp">
+        <Label Content="name"/>
+        <TextBox x:Name="tb_name" />
+        <Label Content="price"/>
+        <TextBox x:Name="tb_price"/>
+        <CheckBox x:Name="cb_promotional"/>
+        <Button x:Name="btn_send" Content="send" Click="btn_send_Click"/>
+    </StackPanel>
+</Window>
+

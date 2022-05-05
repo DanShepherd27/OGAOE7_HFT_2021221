@@ -1,0 +1,19 @@
+﻿<Window x:Class="OGAOE7_HFT_2021221.WPFClient.OrderCreateOrUpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OGAOE7_HFT_2021221.WPFClient"
+        mc:Ignorable="d"
+        Title="OrderCreateOrUpdateWindow" Height="450" Width="800">
+    <StackPanel x:Name="sp">
+        <Label Content="Time of order"/>
+        <DatePicker Name="dp_timeoforder"/>
+        <Label Content="Discount percentage"/>
+        <Slider x:Name="sl_discount"/>
+        <Label Content="Pick a pizza"/>
+        <ComboBox x:Name="cb_pizzas"/>
+        <Label Content="Pick a drink"/>
+        <ComboBox x:Name="cb_drinks"/>
+    </StackPanel>
+</Window>
