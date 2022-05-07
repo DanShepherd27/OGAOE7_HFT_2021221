@@ -30,7 +30,17 @@ function display() {
 }
 
 function remove(id) {
-    alert(id);
+    fetch('http://localhost:26548/pizza/id/' + id, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json', },
+        body: null
+    })
+        .then(response => response)
+        .then(data => {
+            console.log('Success: ' + data);
+            getdata();
+        })
+        .catch((error) => { console.error('Error: ', error); })
 }
 
 function create() {
@@ -39,10 +49,10 @@ function create() {
     fetch('http://localhost:26548/pizza', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', },
-        body: JSON.stringify({ name: name, price: price}),
+        body: JSON.stringify({ name: name, price: price }),
     })
         .then(response => response)
-        .then(data => { console.log('Success:', data); getdata();})
-        .catch(error => { console.error('Error:', error); });
+        .then(data => { console.log('Success: ', data); getdata(); })
+        .catch((error) => { console.error('Error: ', error); });
     getdata();
 }
