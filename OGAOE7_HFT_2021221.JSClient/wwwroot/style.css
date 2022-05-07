@@ -6,14 +6,11 @@
 table {
     width: 90%;
     margin: auto;
+    border-collapse: collapse;
 }
 
 table, th, td {
     border: 1px solid #4CAF50;
-}
-
-table {
-    border-collapse: collapse;
 }
 
 th, td {
@@ -67,3 +64,32 @@ button, button::after {
         width: 40%;
         margin-left: 30%;
     }
+
+#updateformdiv {
+    display: none;
+    flex-direction: column;
+    width: 500px;
+    max-width: 90%;
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+    #updateformdiv label {
+        margin-top: 10px;
+        font-weight: normal;
+    }
+
+    #updateformdiv button, input {
+        margin: 5px 0px 10px 0px;
+        padding: 7px;
+    }
+
+    #updateformdiv button {
+        width: 40%;
+        margin-left: 30%;
+    }
+
+.deletebutton, .updatebutton{
+    width: calc(50% - 9px);
+    margin: 0 3px 0 3px;
+}
