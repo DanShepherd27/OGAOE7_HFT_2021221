@@ -13,11 +13,24 @@ async function getdata() {
 }
 
 function display() {
+    document.getElementById('resultarea').innerHTML = '';
     pizzas.forEach(t => {
-        console.log(t.name + ' ' + t.price);
+        console.log(`${t.name} ${t.price} ${t.promotional}`);
         document.getElementById('resultarea').innerHTML +=
-            "<tr><td>" + t.id + "</td><td>" + t.name + "</td><td>" + t.price + "</td></tr>";
+            `<tr> 
+                <td> ${t.id} </td> 
+                <td> ${t.name} </td>
+                <td> ${t.price} </td>
+                <td> ${t.promotional} </td>
+                <td>
+                    <button type="button" onclick="remove(${t.id})">Delete</button>
+                </td>
+            </tr>`;
     });
+}
+
+function remove(id) {
+    alert(id);
 }
 
 function create() {

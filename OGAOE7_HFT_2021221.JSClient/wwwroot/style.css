@@ -1,12 +1,18 @@
-﻿table{
-    width: 100%;
+﻿body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: whitesmoke;
 }
 
-table, th, td{
-    border: 1px solid double;
+table {
+    width: calc(90% - 20px);
+    margin: auto;
 }
 
-table{
+table, th, td {
+    border: 1px solid #4CAF50;
+}
+
+table {
     border-collapse: collapse;
 }
 
@@ -14,21 +20,42 @@ th, td {
     padding: 5px;
 }
 
-th{
-    background-color: lightblue;
+th {
+    background-color: #4CAF50;
+    text-align: left;
+    color: white;
+    font-weight: normal;
 }
 
-#formdiv{
+h1 {
+    text-align: center;
+}
+
+#formdiv {
     display: flex;
     flex-direction: column;
+    width: 25%;
+    margin: auto;
     margin-bottom: 20px;
 }
 
-#formdiv label, button, input{
-    margin: 10px;
-    padding: 7px;
-}
+    #formdiv label {
+        margin-top: 10px;
+        font-weight: normal;
+    }
 
-#formdiv label{
-    font-weight: bolder;
-}
+    #formdiv button, input {
+        margin: 5px 0px 10px 0px;
+        padding: 7px;
+    }
+
+    #formdiv button {
+        background-color: #4CAF50;
+        border: none;
+        color: white;
+        width: 25%;
+        height: 35px;
+        margin-left: 37.5%;
+        display: inline-block;
+        font-size: 15px;
+    }
