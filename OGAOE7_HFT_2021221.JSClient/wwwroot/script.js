@@ -83,6 +83,8 @@ function create() {
         .then(data => { console.log('Success: ', data); getdata(); })
         .catch((error) => { console.error('Error: ', error); });
     getdata();
+    document.getElementById('pizzaname').value = '';
+    document.getElementById('pizzaprice').value = '';
 }
 
 function remove(id) {
