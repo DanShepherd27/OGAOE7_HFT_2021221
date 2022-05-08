@@ -17,8 +17,4 @@
     <ProjectReference Include="..\OGAOE7_HFT_2021221.Models\OGAOE7_HFT_2021221.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Logic\" />
-  </ItemGroup>
-
 </Project>

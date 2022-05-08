@@ -7,12 +7,40 @@
         mc:Ignorable="d"
         Title="DrinkCreateOrUpdateWindow" Height="400" Width="300" ResizeMode="NoResize">
     <StackPanel x:Name="sp" Background="#F5F5F5">
-        <Label Content="Name" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="tb_name" Padding="5"/>
-        <Label Content="Price" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
-        <TextBox x:Name="tb_price" Padding="5"/>
-        <CheckBox x:Name="cb_promotional" Content="Promotional" Padding="5" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center"/>
-        <Button x:Name="btn_send" Content="Send" Click="Send_Button_Click" Background="#4CAF50" Foreground="White" Padding="10" Margin="10 100 10 10" Width="200"/>
+        <Label Content="Name" 
+               Background="#4CAF50" 
+               Foreground="White" 
+               Padding="10" 
+               HorizontalContentAlignment="Center" 
+               FontSize="15" FontFamily="Arial"/>
+        <TextBox x:Name="tb_name" 
+                 Padding="5" 
+                 FontSize="15" FontFamily="Arial"/>
+        <Label Content="Price" 
+               Background="#4CAF50"
+               Foreground="White" 
+               Padding="10" 
+               HorizontalContentAlignment="Center" 
+               FontSize="15" FontFamily="Arial"/>
+        <TextBox x:Name="tb_price" 
+                 Padding="5" 
+                 FontSize="15" FontFamily="Arial"/>
+        <CheckBox x:Name="cb_promotional" 
+                  Content="Promotional" 
+                  Padding="5" 
+                  HorizontalContentAlignment="Center" 
+                  HorizontalAlignment="Center" 
+                  VerticalContentAlignment="Center" 
+                  FontSize="15" FontFamily="Arial"/>
+        <Button x:Name="btn_send" 
+                Content="Send" 
+                Click="Send_Button_Click" 
+                Background="#4CAF50" 
+                Foreground="White" 
+                Padding="10" 
+                Margin="10 150 10 10" 
+                Width="200" 
+                FontSize="15" FontFamily="Arial"/>
     </StackPanel>
 </Window>
 

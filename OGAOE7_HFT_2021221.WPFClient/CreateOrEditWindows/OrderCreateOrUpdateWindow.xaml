@@ -7,27 +7,66 @@
         mc:Ignorable="d"
         Title="OrderCreateOrUpdateWindow" Height="420" Width="300" ResizeMode="NoResize">
     <StackPanel x:Name="sp" Background="#F5F5F5" DataContext="Order">
-        <Label Content="Time of order" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
-        <DatePicker Name="dp_timeoforder" Padding="5" Margin="5"/>
-        <Label Content="Discount percentage" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
-        <Label x:Name="percentageNumber" HorizontalContentAlignment="Center" Content="{Binding ElementName=sl_discount, Path=Value, Mode=OneWay}"/>
-        <Slider x:Name="sl_discount" Margin="10" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="5"/>
-        <Label Content="Pick a pizza" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
+        <Label Content="Time of order" 
+               Background="#4CAF50" 
+               Foreground="White" 
+               Padding="10" 
+               HorizontalContentAlignment="Center"
+               FontSize="15" FontFamily="Arial"/>
+        <DatePicker Name="dp_timeoforder" 
+                    Padding="5"
+                    Margin="5"/>
+        <Label Content="Discount percentage" 
+               Background="#4CAF50" 
+               Foreground="White" 
+               Padding="10" 
+               HorizontalContentAlignment="Center"
+               FontSize="15" FontFamily="Arial"/>
+        <Label x:Name="percentageNumber" 
+               HorizontalContentAlignment="Center" 
+               Content="{Binding ElementName=sl_discount, Path=Value, Mode=OneWay}"
+               FontSize="15" FontFamily="Arial"/>
+        <Slider x:Name="sl_discount" 
+                Margin="10"
+                Maximum="100" 
+                IsSnapToTickEnabled="True" 
+                TickFrequency="1" 
+                LargeChange="5"/>
+        <Label Content="Pick a pizza" 
+               Background="#4CAF50" 
+               Foreground="White" 
+               Padding="10" 
+               HorizontalContentAlignment="Center"
+               FontSize="15" FontFamily="Arial"/>
         <ComboBox x:Name="cb_pizzas" Padding="5">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding Path=Name}"/>
+                    <Label Content="{Binding Path=Name}"
+                           FontSize="15" FontFamily="Arial"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-            <Label Content="Pick a drink" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
+        <Label Content="Pick a drink" 
+                   Background="#4CAF50" 
+                   Foreground="White" 
+                   Padding="10" 
+                   HorizontalContentAlignment="Center"
+                   FontSize="15" FontFamily="Arial"/>
         <ComboBox x:Name="cb_drinks" Padding="5">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <Label Content="{Binding Path=Name}"/>
+                    <Label Content="{Binding Path=Name}"
+                           FontSize="15" FontFamily="Arial"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <Button Content="Send" Click="Send_Button_Click" Background="#4CAF50" Foreground="White" Padding="10" Margin="10" Width="200"/>
+        <Button Content="Send" 
+                Click="Send_Button_Click" 
+                Background="#4CAF50" 
+                Foreground="White" 
+                Padding="10" 
+                Margin="10" 
+                Width="200"
+                FontSize="15" FontFamily="Arial"/>
     </StackPanel>
 </Window>
