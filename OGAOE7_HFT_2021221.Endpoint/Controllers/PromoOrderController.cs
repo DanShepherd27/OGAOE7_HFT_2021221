@@ -57,8 +57,9 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         [HttpDelete("id/{id}")]
         public void Delete(int id)
         {
+            var promOrderToDelete = this.pol.Read(id);
             pol.Delete(id);
-            hub.Clients.All.SendAsync("PromoOrderDeleted", id);
+            hub.Clients.All.SendAsync("PromoOrderDeleted", promOrderToDelete);
         }
     }
 }

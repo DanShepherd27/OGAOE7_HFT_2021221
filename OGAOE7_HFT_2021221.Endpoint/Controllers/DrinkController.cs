@@ -65,16 +65,18 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         [HttpDelete("name/{name}")]
         public void Delete(string name)
         {
+            var drinkToDelete = this.dl.Read(name);
             dl.Delete(name);
-            hub.Clients.All.SendAsync("DrinkDeleted", name);
+            hub.Clients.All.SendAsync("DrinkDeleted", drinkToDelete);
         }
         
         // DELETE: /drink/id
         [HttpDelete("id/{id}")]
         public void Delete(int id)
         {
+            var drinkToDelete = this.dl.Read(id);
             dl.Delete(id);
-            hub.Clients.All.SendAsync("DrinkDeleted", id);
+            hub.Clients.All.SendAsync("DrinkDeleted", drinkToDelete);
         }
     }
 }
