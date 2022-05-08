@@ -14,11 +14,14 @@
                TargetType="{x:Type RadioButton}"
                x:Key="RadioButtonTheme">
             <Style.Setters>
-                <Setter Property="Background" Value="Beige"/>
+                <Setter Property="Background" Value="#4CAF50"/>
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="FontFamily" Value="Arial"/>
+                <Setter Property="FontSize" Value="15"/>
             </Style.Setters>
             <!--<Style.Triggers>
                 <Trigger Property="IsChecked" Value="True">
-                    <Setter Property="Background" Value="Red"/>
+                    <Setter TargetName="" Property="Background" Value="#54c758"/>
                 </Trigger>
             </Style.Triggers>-->
         </Style>
@@ -65,9 +68,9 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Button x:Name="btn_create" Grid.Row="0" Background="Beige"/>
-                <Button x:Name="btn_update" Grid.Row="1" Background="Beige"/>
-                <Button x:Name="btn_delete" Grid.Row="2" Background="Beige"/>
+                <Button x:Name="btn_create" Grid.Row="0" Background="#4CAF50" Foreground="White" FontFamily="Arial" FontSize="15"/>
+                <Button x:Name="btn_update" Grid.Row="1" Background="#4CAF50" Foreground="White" FontFamily="Arial" FontSize="15" />
+                <Button x:Name="btn_delete" Grid.Row="2" Background="#4CAF50" Foreground="White" FontFamily="Arial" FontSize="15" />
 
             </Grid>
         </Grid>
