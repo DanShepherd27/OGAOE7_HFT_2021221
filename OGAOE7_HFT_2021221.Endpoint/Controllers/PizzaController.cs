@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using OGAOE7_HFT_2021221.Logic;
 using OGAOE7_HFT_2021221.Models;
 using System;
@@ -15,9 +16,11 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
     public class PizzaController : ControllerBase
     {
         IPizzaLogic pl;
-        public PizzaController(IPizzaLogic pl)
+        private readonly IHubContext<SignalRHub> hub;
+        public PizzaController(IPizzaLogic pl, IHubContext<SignalRHub> hub)
         {
             this.pl = pl;
+            this.hub = hub;
         }
         // GET: /pizza
         [HttpGet]
@@ -45,6 +48,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         public void Post([FromBody] Pizza value)
         {
             pl.Create(value);
+            hub.Clients.All.SendAsync("PizzaCreated", value);
         }
 
         // PUT: /pizza
@@ -52,6 +56,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         public void Put([FromBody] Pizza value)
         {
             pl.Update(value);
+            hub.Clients.All.SendAsync("PizzaUpdated", value);
         }
 
         // DELETE: pizza
@@ -59,6 +64,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         public void Delete(string name)
         {
             pl.Delete(name);
+            hub.Clients.All.SendAsync("PizzaDeleted", name);
         }
         
         // DELETE: pizza
@@ -66,6 +72,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         public void Delete(int id)
         {
             pl.Delete(id);
+            hub.Clients.All.SendAsync("PizzaDeleted", id);
         }
     }
 }

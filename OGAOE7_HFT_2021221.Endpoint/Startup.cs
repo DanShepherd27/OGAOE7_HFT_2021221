@@ -30,6 +30,8 @@ namespace OGAOE7_HFT_2021221.Endpoint
             services.AddTransient<IPromoOrderRepository, PromoOrderRepository>();
 
             services.AddTransient<PizzaDbContext, PizzaDbContext>();
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,13 +52,9 @@ namespace OGAOE7_HFT_2021221.Endpoint
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
-            {
-                //endpoints.MapGet("/", async context =>
-                //{
-                //    await context.Response.WriteAsync("Welcome to the promotional pizza order app!");
-                //});
-
+            {               
                 endpoints.MapControllers();
+                endpoints.MapHub<SignalRHub>("/hub");
             });
         }
     }

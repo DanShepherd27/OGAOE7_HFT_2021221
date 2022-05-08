@@ -82,9 +82,9 @@ namespace OGAOE7_HFT_2021221.WPFClient
 
         public MainWindowViewModel()
         {
-            Pizzas = new RestCollection<Pizza>("http://localhost:26548/", "pizza");
-            Drinks = new RestCollection<Drink>("http://localhost:26548/", "drink");
-            Orders = new RestCollection<PromoOrder>("http://localhost:26548/", "promoorder");
+            Pizzas = new RestCollection<Pizza>("http://localhost:26548/", "pizza", "hub");
+            Drinks = new RestCollection<Drink>("http://localhost:26548/", "drink", "hub");
+            Orders = new RestCollection<PromoOrder>("http://localhost:26548/", "promoorder", "hub");
 
             CreatePizzaCommand = new RelayCommand(() =>
             {

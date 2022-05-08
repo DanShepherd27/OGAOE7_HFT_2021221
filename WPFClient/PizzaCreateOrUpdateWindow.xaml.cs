@@ -23,6 +23,7 @@ namespace OGAOE7_HFT_2021221.WPFClient
         public PizzaCreateOrUpdateWindow()
         {
             InitializeComponent();
+            Pizza = new Pizza();
         }
 
         public PizzaCreateOrUpdateWindow(Pizza selectedPizza) : this()
@@ -34,7 +35,7 @@ namespace OGAOE7_HFT_2021221.WPFClient
             tb_price.SetBinding(TextBox.TextProperty, new Binding("Price"));
         }
 
-        public Pizza? Pizza { get; private set; }
+        public Pizza Pizza { get; private set; }
 
         private void btn_send_Click(object sender, RoutedEventArgs e)
         {

@@ -23,6 +23,7 @@ namespace OGAOE7_HFT_2021221.WPFClient
         public DrinkCreateOrUpdateWindow()
         {
             InitializeComponent();
+            Drink = new Drink();
         }
         public DrinkCreateOrUpdateWindow(Drink selectedDrink) : this()
         {
@@ -34,7 +35,7 @@ namespace OGAOE7_HFT_2021221.WPFClient
             cb_promotional.SetBinding(CheckBox.IsCheckedProperty, new Binding("Promotional"));
         }
 
-        public Drink? Drink { get; internal set; }
+        public Drink Drink { get; internal set; }
 
         private void btn_send_Click(object sender, RoutedEventArgs e)
         {

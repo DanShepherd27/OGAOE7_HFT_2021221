@@ -8,7 +8,7 @@ setupSignalR();
 function setupSignalR() {
     connection = new signalR.HubConnectionBuilder()
         .withUrl("http://localhost:26548/hub")
-        .configureLogging(signalR.LogLevel.information)
+        .configureLogging(signalR.LogLevel.Information)
         .build();
 
     connection.on("PizzaCreated", (user, message) => {

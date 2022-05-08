@@ -24,6 +24,7 @@ namespace OGAOE7_HFT_2021221.WPFClient
         {
 
             InitializeComponent();
+            Order = new PromoOrder();
         }
 
         public OrderCreateOrUpdateWindow(PromoOrder selectedOrder) : this()
@@ -33,7 +34,7 @@ namespace OGAOE7_HFT_2021221.WPFClient
 
         }
 
-        public PromoOrder? Order { get; internal set; }
+        public PromoOrder Order { get; internal set; }
         private void btn_send_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using OGAOE7_HFT_2021221.Logic;
 using OGAOE7_HFT_2021221.Logic.Exceptions;
 using OGAOE7_HFT_2021221.Models;
@@ -16,9 +17,11 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
     public class DrinkController : ControllerBase
     {
         IDrinkLogic dl;
-        public DrinkController(IDrinkLogic dl)
+        private readonly IHubContext<SignalRHub> hub;
+        public DrinkController(IDrinkLogic dl, IHubContext<SignalRHub> hub)
         {
             this.dl = dl;
+            this.hub = hub;
         }
 
         // GET: /drink
@@ -47,6 +50,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         public void Post([FromBody] Drink value)
         {
             dl.Create(value);
+            hub.Clients.All.SendAsync("DrinkCreated", value);
         }
 
         // PUT: /drink
@@ -54,6 +58,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         public void Put([FromBody] Drink value)
         {
             dl.Update(value);
+            hub.Clients.All.SendAsync("DrinkUpdated", value);
         }
 
         // DELETE: /drink/name
@@ -61,6 +66,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         public void Delete(string name)
         {
             dl.Delete(name);
+            hub.Clients.All.SendAsync("DrinkDeleted", name);
         }
         
         // DELETE: /drink/id
@@ -68,6 +74,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         public void Delete(int id)
         {
             dl.Delete(id);
+            hub.Clients.All.SendAsync("DrinkDeleted", id);
         }
     }
 }

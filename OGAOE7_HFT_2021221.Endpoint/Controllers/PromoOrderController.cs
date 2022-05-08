@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using OGAOE7_HFT_2021221.Logic;
 using OGAOE7_HFT_2021221.Models;
 using System;
@@ -15,9 +16,11 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
     public class PromoOrderController : ControllerBase
     {
         IPromoOrderLogic pol;
-        public PromoOrderController(IPromoOrderLogic pol)
+        private readonly IHubContext<SignalRHub> hub;
+        public PromoOrderController(IPromoOrderLogic pol, IHubContext<SignalRHub> hub)
         {
             this.pol = pol;
+            this.hub = hub;
         }
 
         // GET: /promoorder
@@ -39,6 +42,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         public void Post([FromBody] PromoOrder value)
         {
             pol.Create(value);
+            hub.Clients.All.SendAsync("PromoOrderCreated", value);
         }
 
         // PUT: /promoorder
@@ -46,6 +50,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         public void Put([FromBody] PromoOrder value)
         {
             pol.Update(value);
+            hub.Clients.All.SendAsync("PromoOrderUpdated", value);
         }
 
         // DELETE: /promoorder
@@ -53,6 +58,7 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         public void Delete(int id)
         {
             pol.Delete(id);
+            hub.Clients.All.SendAsync("PromoOrderDeleted", id);
         }
     }
 }
