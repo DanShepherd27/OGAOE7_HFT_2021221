@@ -12,43 +12,43 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class PromoOrderController : ControllerBase
     {
         IPromoOrderLogic pol;
-        public OrderController(IPromoOrderLogic pol)
+        public PromoOrderController(IPromoOrderLogic pol)
         {
             this.pol = pol;
         }
 
-        // GET: /order
+        // GET: /promoorder
         [HttpGet]
         public IEnumerable<PromoOrder> Get()
         {
             return pol.ReadAll();
         }
 
-        // GET: /order/{id}
+        // GET: /promoorder/{id}
         [HttpGet("{id}")]
         public IEnumerable<PromoOrder> Get(int id)
         {
             return pol.Read(id);
         }
 
-        // POST: /order
+        // POST: /promoorder
         [HttpPost]
         public void Post([FromBody] PromoOrder value)
         {
             pol.Create(value);
         }
 
-        // PUT: /order
+        // PUT: /promoorder
         [HttpPut]
         public void Put([FromBody] PromoOrder value)
         {
             pol.Update(value);
         }
 
-        // DELETE: order
+        // DELETE: /promoorder
         [HttpDelete("id/{id}")]
         public void Delete(int id)
         {
