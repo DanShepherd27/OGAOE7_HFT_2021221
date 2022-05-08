@@ -24,8 +24,8 @@ namespace OGAOE7_HFT_2021221.WPFClient
         {
             InitializeComponent();
             Drink = new Drink();
-            sp.DataContext = Drink;
 
+            sp.DataContext = Drink;
             tb_name.SetBinding(TextBox.TextProperty, new Binding("Name"));
             tb_price.SetBinding(TextBox.TextProperty, new Binding("Price"));
             cb_promotional.SetBinding(CheckBox.IsCheckedProperty, new Binding("Promotional"));
@@ -40,8 +40,8 @@ namespace OGAOE7_HFT_2021221.WPFClient
                 Price = selectedDrink.Price,
                 Promotional = selectedDrink.Promotional,
             };
-            sp.DataContext = Drink;
 
+            sp.DataContext = Drink;
             tb_name.SetBinding(TextBox.TextProperty, new Binding("Name"));
             tb_price.SetBinding(TextBox.TextProperty, new Binding("Price"));
             cb_promotional.SetBinding(CheckBox.IsCheckedProperty, new Binding("Promotional"));
@@ -49,7 +49,7 @@ namespace OGAOE7_HFT_2021221.WPFClient
 
         public Drink Drink { get; internal set; }
 
-        private void btn_send_Click(object sender, RoutedEventArgs e)
+        private void Send_Button_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
         }

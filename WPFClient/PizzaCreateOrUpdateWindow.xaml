@@ -11,6 +11,6 @@
         <TextBox x:Name="tb_name" Padding="5"/>
         <Label Content="Price" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
         <TextBox x:Name="tb_price" InputScope="Number" Padding="5"/>
-        <Button x:Name="btn_send" Content="Send" Click="btn_send_Click" Background="#4CAF50" Foreground="White" Padding="10" Margin="10 100 10 10" Width="200"/>
+        <Button x:Name="btn_send" Content="Send" Click="Send_Button_Click" Background="#4CAF50" Foreground="White" Padding="10" Margin="10 100 10 10" Width="200"/>
     </StackPanel>
 </Window>

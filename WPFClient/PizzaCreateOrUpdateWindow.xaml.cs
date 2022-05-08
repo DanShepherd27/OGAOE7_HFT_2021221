@@ -47,7 +47,7 @@ namespace OGAOE7_HFT_2021221.WPFClient
 
         public Pizza Pizza { get; private set; }
 
-        private void btn_send_Click(object sender, RoutedEventArgs e)
+        private void Send_Button_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
         }
