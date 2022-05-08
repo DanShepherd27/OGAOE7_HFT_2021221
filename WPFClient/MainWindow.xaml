@@ -72,6 +72,7 @@
                 <Button x:Name="btn_update" Grid.Row="1" Background="#4CAF50" Foreground="White" FontFamily="Arial" FontSize="15" />
                 <Button x:Name="btn_delete" Grid.Row="2" Background="#4CAF50" Foreground="White" FontFamily="Arial" FontSize="15" />
 
+
             </Grid>
         </Grid>
 

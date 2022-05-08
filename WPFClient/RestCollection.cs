@@ -16,7 +16,7 @@ namespace OGAOE7_HFT_2021221.WPFClient
     {
         HttpClient client;
 
-        public RestService(string baseurl, string pingableEndpoint = "swagger")
+        public RestService(string baseurl, string pingableEndpoint = "pizza")
         {
             bool isOk = false;
             do
@@ -285,7 +285,7 @@ namespace OGAOE7_HFT_2021221.WPFClient
         bool hasSignalR;
         Type type = typeof(T);
 
-        public RestCollection(string baseurl, string endpoint, string hub = null)
+        public RestCollection(string baseurl, string endpoint, string? hub = null)
         {
             hasSignalR = hub != null;
             this.rest = new RestService(baseurl, endpoint);
@@ -295,7 +295,8 @@ namespace OGAOE7_HFT_2021221.WPFClient
                 this.notify.AddHandler<T>(type.Name + "Created", (T item) =>
                 {
                     items.Add(item);
-                    CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                    //CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                    Init();
                 });
                 this.notify.AddHandler<T>(type.Name + "Deleted", (T item) =>
                 {
@@ -303,7 +304,8 @@ namespace OGAOE7_HFT_2021221.WPFClient
                     if (element != null)
                     {
                         items.Remove(item);
-                        CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                        //CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                        Init();
                     }
                     else
                     {
@@ -388,15 +390,29 @@ namespace OGAOE7_HFT_2021221.WPFClient
             }
         }
 
-        public void Delete(int id)
+        public void Delete(int id, string endpoint)
         {
             if (hasSignalR)
             {
-                this.rest.DeleteAsync(id, typeof(T).Name);
+                //this.rest.DeleteAsync(id, typeof(T).Name);
+                // Itt azért ezt a megoldást használom, mert valamiért a WPF-ben a listbox törléskor nem frissül be. Próbáltam sokféle megoldást, egyik se működött.
+                // Valószínűleg nem az adatkötés beállítása a hibás, hanem a RestColectionben valami, vagy pedig az OnPropertyChanged valami miatt nem hívódik meg. ¯\_(ツ)_/¯
+                this.rest.DeleteAsync(id, endpoint).ContinueWith((t) =>
+                {
+                    Init().ContinueWith(z =>
+                    {
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                        });
+                    });
+                });
+
             }
             else
             {
-                this.rest.DeleteAsync(id, typeof(T).Name).ContinueWith((t) =>
+                //this.rest.DeleteAsync(id, typeof(T).Name).ContinueWith((t) =>
+                this.rest.DeleteAsync(id, endpoint).ContinueWith((t) =>
                 {
                     Init().ContinueWith(z =>
                     {

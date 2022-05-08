@@ -30,7 +30,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Others", "Others", "{6A9485
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OGAOE7_HFT_2021221.WPFClient", "WPFClient\OGAOE7_HFT_2021221.WPFClient.csproj", "{CBD286A8-D25E-46C2-BCFC-B1D71FD7763C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OGAOE7_HFT_2021221.JSClient", "OGAOE7_HFT_2021221.JSClient\OGAOE7_HFT_2021221.JSClient.csproj", "{D57CEBD6-057E-46BE-9419-32E7FE417657}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OGAOE7_HFT_2021221.JSClient", "OGAOE7_HFT_2021221.JSClient\OGAOE7_HFT_2021221.JSClient.csproj", "{D57CEBD6-057E-46BE-9419-32E7FE417657}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{36C2B87D-86BA-4033-A0EC-736B28AA49B0}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

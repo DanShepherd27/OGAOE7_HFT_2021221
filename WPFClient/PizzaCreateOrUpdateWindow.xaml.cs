@@ -24,13 +24,23 @@ namespace OGAOE7_HFT_2021221.WPFClient
         {
             InitializeComponent();
             Pizza = new Pizza();
+
+            sp.DataContext = Pizza;
+            tb_name.SetBinding(TextBox.TextProperty, new Binding("Name"));
+            tb_price.SetBinding(TextBox.TextProperty, new Binding("Price"));
         }
 
-        public PizzaCreateOrUpdateWindow(Pizza selectedPizza) : this()
+        public PizzaCreateOrUpdateWindow(Pizza selectedPizza)
         {
-            Pizza = selectedPizza;
-            sp.DataContext = Pizza;
+            InitializeComponent();
+            Pizza = new Pizza()
+            {
+                Id = selectedPizza.Id,
+                Name = selectedPizza.Name,
+                Price = selectedPizza.Price,
+            };
 
+            sp.DataContext = Pizza;
             tb_name.SetBinding(TextBox.TextProperty, new Binding("Name"));
             tb_price.SetBinding(TextBox.TextProperty, new Binding("Price"));
         }

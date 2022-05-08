@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\OGAOE7_HFT_2021221.Models\OGAOE7_HFT_2021221.Models.csproj" />
     <ProjectReference Include="..\OGAOE7_HFT_2021221.Repository\OGAOE7_HFT_2021221.Repository.csproj" />
   </ItemGroup>

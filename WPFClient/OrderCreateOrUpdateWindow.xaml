@@ -5,15 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OGAOE7_HFT_2021221.WPFClient"
         mc:Ignorable="d"
-        Title="OrderCreateOrUpdateWindow" Height="450" Width="800">
-    <StackPanel x:Name="sp">
-        <Label Content="Time of order"/>
-        <DatePicker Name="dp_timeoforder"/>
-        <Label Content="Discount percentage"/>
-        <Slider x:Name="sl_discount"/>
-        <Label Content="Pick a pizza"/>
-        <ComboBox x:Name="cb_pizzas"/>
-        <Label Content="Pick a drink"/>
-        <ComboBox x:Name="cb_drinks"/>
+        Title="OrderCreateOrUpdateWindow" Height="420" Width="300" ResizeMode="NoResize">
+    <StackPanel x:Name="sp" Background="#F5F5F5" DataContext="Order">
+        <Label Content="Time of order" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
+        <DatePicker Name="dp_timeoforder" Padding="5" Margin="5"/>
+        <Label Content="Discount percentage" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
+        <Label x:Name="percentageNumber" HorizontalContentAlignment="Center" Content="{Binding ElementName=sl_discount, Path=Value, Mode=OneWay}"/>
+        <Slider x:Name="sl_discount" Margin="10" Maximum="100" IsSnapToTickEnabled="True" TickFrequency="1" LargeChange="5"/>
+        <Label Content="Pick a pizza" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="cb_pizzas" Padding="5">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Path=Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+            <Label Content="Pick a drink" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="cb_drinks" Padding="5">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Path=Name}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Button Content="Send" Click="Send_Button_Click" Background="#4CAF50" Foreground="White" Padding="10" Margin="10" Width="200"/>
     </StackPanel>
 </Window>

@@ -60,13 +60,13 @@ namespace OGAOE7_HFT_2021221.Endpoint.Controllers
         }
 
         // DELETE: pizza
-        [HttpDelete("name/{name}")]
-        public void Delete(string name)
-        {
-            var pizzaToDelete = this.pl.Read(name);
-            pl.Delete(name);
-            hub.Clients.All.SendAsync("PizzaDeleted", pizzaToDelete);
-        }
+        //[HttpDelete("name/{name}")]
+        //public void Delete(string name)
+        //{
+        //    var pizzaToDelete = this.pl.Read(name);
+        //    pl.Delete(name);
+        //    hub.Clients.All.SendAsync("PizzaDeleted", pizzaToDelete);
+        //}
         
         // DELETE: pizza
         [HttpDelete("id/{id}")]

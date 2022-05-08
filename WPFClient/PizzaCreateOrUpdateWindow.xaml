@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OGAOE7_HFT_2021221.WPFClient"
         mc:Ignorable="d"
-        Title="PizzaCreateOrUpdateWindow" Height="450" Width="300">
-    <StackPanel x:Name="sp">
-        <Label Content="name"/>
-        <TextBox x:Name="tb_name" />
-        <Label Content="price"/>
-        <TextBox x:Name="tb_price"/>
-        <Button x:Name="btn_send" Content="send" Click="btn_send_Click"/>
+        Title="PizzaCreateOrUpdateWindow" Height="400" Width="300" ResizeMode="NoResize">
+    <StackPanel x:Name="sp" Background="#F5F5F5">
+        <Label Content="Name" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="tb_name" Padding="5"/>
+        <Label Content="Price" Background="#4CAF50" Foreground="White" Padding="10" HorizontalContentAlignment="Center"/>
+        <TextBox x:Name="tb_price" InputScope="Number" Padding="5"/>
+        <Button x:Name="btn_send" Content="Send" Click="btn_send_Click" Background="#4CAF50" Foreground="White" Padding="10" Margin="10 100 10 10" Width="200"/>
     </StackPanel>
 </Window>
